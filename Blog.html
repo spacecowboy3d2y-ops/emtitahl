@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Blog & Resources — Emtithal Consulting</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --teal:#1f4f4c; --blue:#2a8bd8; --ink:#0b0c11; --ink-on-dark:#e9eeee;
+  --muted:#a7b4b2; --bg:#0f1111; --card:#151919; --line:#1f2729;
+  --shadow:0 14px 40px rgba(0,0,0,.28); --header-h:72px; --gap:22px;
+  --hdr-dark:#103a38; --hdr-light:#ffffff;
+  --dd-hide-delay:.55s;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink-on-dark);font-family:"Poppins","Cairo",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;line-height:1.6;padding-top:calc(var(--header-h) + 10px)}
+img{max-width:100%;display:block}
+a{text-decoration:none;color:inherit}
+.container{width:min(1160px,92%);margin-inline:auto}
+.section{padding:84px 0}
+.title{color:#fff;margin:0 0 12px;font-size:clamp(1.7rem,2vw+1rem,2.3rem)}
+.lead{color:#cfe7e5}
+.muted{color:var(--muted)}
+.btn{display:inline-block;padding:12px 20px;border-radius:999px;font-weight:700;box-shadow:0 10px 24px rgba(0,0,0,.3)}
+.btn-primary{background:var(--blue);color:#fff}
+.btn-ghost{border:1px solid #264e6b;color:#d9ecff;background:#0e2a3b}
+
+/* ======= Header (white dropdown + opposite hovers on sticky) ======= */
+.hdr-container{width:min(1160px,92%);margin-inline:auto;display:flex;align-items:center;justify-content:space-between;gap:18px}
+.site-header{
+  position:fixed; inset:0 0 auto; z-index:1000; height:72px;
+  display:flex; align-items:center; background:var(--hdr-dark); color:#e7f5f4;
+  box-shadow:0 6px 20px rgba(0,0,0,.35); transition:background .2s,height .2s,box-shadow .2s
+}
+.site-header.scrolled{ background:var(--hdr-light); color:var(--teal); height:64px; box-shadow:0 8px 24px rgba(0,0,0,.15) }
+.brand img{height:52px}
+.main-menu{list-style:none;margin:0;padding:0;display:flex;gap:24px;align-items:center}
+.main-menu>li{position:relative}
+.main-menu a{color:inherit;font-weight:700;display:inline-block;padding:8px 12px;border-radius:10px;line-height:1}
+.site-header:not(.scrolled) .main-menu a:hover{background:var(--teal);color:#fff}
+.site-header.scrolled .main-menu a{color:var(--teal)}
+.site-header.scrolled .main-menu a:hover{background:#fff;color:var(--teal);outline:1px solid color-mix(in srgb,var(--teal) 70%,transparent)}
+.caret{margin-left:6px;display:inline-block;transform:translateY(-1px)}
+
+/* Dropdown (white + delayed hide) */
+.dropdown{
+  position:absolute; top:calc(100% + 10px); left:0; min-width:260px;
+  background:#fff; border:1px solid #e6edf1; border-radius:12px; padding:8px;
+  opacity:0; visibility:hidden; transform:translateY(8px);
+  pointer-events:none; will-change:opacity,transform;
+  transition: opacity .13s ease var(--dd-hide-delay),
+             transform .13s ease var(--dd-hide-delay),
+             visibility 0s linear var(--dd-hide-delay);
+  box-shadow:0 16px 36px rgba(10,20,30,.15)
+}
+.dropdown a{display:block;padding:10px 12px;border-radius:8px;color:var(--teal);font-weight:700}
+.dropdown a:hover{background:#1f4f4c;color:#fff}
+.main-menu li:hover>.dropdown,
+.main-menu .open-dd>.dropdown,
+.dropdown.js-open{opacity:1;visibility:visible;transform:translateY(0);pointer-events:auto;transition-delay:0s,0s,0s}
+
+/* mobile nav */
+.nav-toggle{display:none;background:#0b2b29;color:#fff;border:0;padding:10px 14px;border-radius:10px;font-weight:700}
+.site-header.scrolled .nav-toggle{background:#eef4f4;color:var(--teal)}
+@media (max-width:760px){
+  .nav-toggle{display:inline-block}
+  .main-menu{display:none;position:absolute;top:72px;left:4%;right:4%;background:var(--hdr-dark);padding:14px;border-radius:12px;flex-direction:column;gap:12px}
+  .site-header.scrolled .main-menu{background:#fff}
+  .main-menu.open{display:flex}
+  .dropdown{position:static;display:none;margin-top:-4px;box-shadow:none;border:0;opacity:1;visibility:visible;transform:none;transition:none}
+  .main-menu .open-dd>.dropdown{display:block}
+}
+
+/* ======= Hero ======= */
+.hero{position:relative;min-height:40vh;display:grid;place-items:center;background:url('images-/bg-5.jpg') center/cover no-repeat}
+.hero::before{content:"";position:absolute;inset:0;background:linear-gradient(150deg, rgba(0,0,0,.55), rgba(17,30,31,.62))}
+.hero-inner{position:relative;z-index:1;text-align:center;max-width:900px;padding:0 12px}
+.hero h1{color:#fff;margin:0 0 10px;font-size:clamp(2rem,2.4vw+1rem,3rem)}
+.hero p{margin:0;color:#d8ecea}
+
+/* ======= Filter bar (sticky under header) ======= */
+.filter-wrap{
+  position:sticky; top:calc(var(--header-h) + 6px); z-index:900;
+  background:#0f1518cc; backdrop-filter:blur(6px);
+  border:1px solid #1d2830; border-radius:14px; padding:12px;
+  margin-top:-38px; /* pull up closer to hero bottom */
+  box-shadow:0 10px 24px rgba(0,0,0,.28);
+}
+.filter-grid{display:grid;grid-template-columns:1.1fr .9fr .9fr .7fr auto;gap:10px;align-items:center}
+.filter-grid .count{justify-self:end;white-space:nowrap;color:#cfe7e5;font-weight:700}
+.input, .select{
+  width:100%; border:1px solid #223035; background:#0c1213; color:#eaf3f3;
+  padding:10px 12px; border-radius:10px; font:inherit; outline:none;
+}
+.select{appearance:none;background-image:linear-gradient(45deg,transparent 50%,#6ea9ff 50%),linear-gradient(135deg,#6ea9ff 50%,transparent 50%),linear-gradient(to right,#0c1213,#0c1213);background-position:calc(100% - 18px) 16px,calc(100% - 12px) 16px,0 0;background-size:6px 6px,6px 6px,100% 100%;background-repeat:no-repeat}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{display:inline-flex;gap:8px;align-items:center;padding:8px 12px;border-radius:999px;border:1px dashed #2b3a3f;background:#0b1213;color:#d9ecff;font-weight:600;cursor:pointer;user-select:none}
+.chip.active{background:#1f4f4c;color:#fff;border-style:solid}
+.clear-btn{background:#132228;color:#cfe7e5;border:1px solid #203036;border-radius:999px;padding:8px 12px;font-weight:700}
+.clear-btn:hover{filter:brightness(1.05)}
+
+/* ======= Blog grid ======= */
+.grid{display:grid;gap:var(--gap)}
+.grid-3{grid-template-columns:repeat(3,1fr)}
+@media (max-width:980px){.grid-3{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:640px){.grid-3{grid-template-columns:1fr}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;box-shadow:var(--shadow);transition:transform .15s,box-shadow .15s}
+.card:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(0,0,0,.32)}
+.thumb{aspect-ratio:16/9;width:100%;object-fit:cover}
+.card-body{padding:16px}
+.meta{display:flex;gap:10px;align-items:center;color:#91a3a8;font-size:.9rem;margin-bottom:6px}
+.badge{display:inline-block;padding:4px 10px;border-radius:999px;background:#112023;border:1px solid #1c2d31;color:#8ad8cf;font-weight:700;font-size:.8rem}
+.card h3{margin:.2rem 0 6px;color:#fff;font-size:1.05rem}
+.card p{margin:0;color:#a7b4b2}
+.hidden{display:none !important}
+
+/* ======= Footer (black) ======= */
+.footer-modern.v2{background:#0b0c11;color:#cfd3da;border-top:1px solid #10131a}
+.footer-modern.v2 a{color:#cfd3da}.footer-modern.v2 a:hover{color:#fff}
+.footer-cta{margin:48px auto 26px;padding:18px 22px;display:flex;align-items:center;justify-content:space-between;gap:16px;background:#12161d;border:1px solid #1e2531;border-radius:18px;box-shadow:0 18px 40px rgba(0,0,0,.35)}
+.footer-columns{display:grid;gap:36px 48px;grid-template-columns:repeat(4,1fr);padding:24px 0 16px}
+.foot-title{color:#fff;margin:0 0 14px;font-weight:800;text-transform:uppercase;letter-spacing:.3px;display:flex;align-items:center;gap:10px}
+.foot-ico{display:inline-grid;place-items:center;width:34px;height:34px;border-radius:10px;background:#121522;border:1px solid #1c2134;color:#e8ecff;flex-shrink:0}
+.foot-ico svg{width:18px;height:18px}
+.foot-links{list-style:none;padding:0;margin:0;display:grid;gap:10px}
+.social-row{display:flex;gap:12px;margin-top:6px}
+.social{width:42px;height:42px;display:inline-grid;place-items:center;border-radius:10px;border:1px solid #1c2134;background:#121522;color:#ffffff;transition:transform .15s,box-shadow .15s,background .15s,color .15s}
+.social svg{width:18px;height:18px}
+.social:hover{transform:translateY(-2px);box-shadow:0 10px 18px rgba(0,0,0,.25);background:var(--blue);color:#fff}
+.footer-sub{border-top:1px solid #11161f;border-bottom:1px solid #11161f;padding:12px 0;display:flex;align-items:center;justify-content:space-between;gap:18px;color:#aeb7c7;font-size:.95rem}
+.foot-bottom{background:#090a0f}
+.bottom-inner{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:18px 0}
+.bottom-logo{height:36px}
+.btn.ghost{background:linear-gradient(90deg,#2a8bd8,#6aa7ee);color:#fff}
+@media (max-width:1100px){.footer-columns{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:700px){
+  .footer-cta{flex-direction:column;text-align:center}
+  .footer-columns{grid-template-columns:1fr}
+  .footer-sub,.bottom-inner{flex-direction:column;text-align:center}
+}
+
+/* FABs */
+.whatsapp-btn{
+  position:fixed;left:18px;bottom:18px;z-index:1200;width:46px;height:46px;border-radius:999px;border:0;
+  display:grid;place-items:center;background:#25d366;color:#0b0c11;box-shadow:0 12px 26px rgba(0,0,0,.28)
+}
+.whatsapp-btn svg{width:22px;height:22px}
+.back-to-top{
+  position:fixed;right:18px;bottom:18px;z-index:1200;width:46px;height:46px;border:0;border-radius:999px;
+  background:#2b3640;color:#fff;display:grid;place-items:center;box-shadow:0 12px 26px rgba(0,0,0,.28);
+  opacity:0;transform:translateY(10px);pointer-events:none;transition:opacity .25s,transform .25s,background .2s
+}
+.back-to-top.show{opacity:1;transform:none;pointer-events:auto}
+.back-to-top:hover{background:var(--blue)}
+.back-to-top svg{width:20px;height:20px}
+</style>
+</head>
+<body id="top">
+
+<!-- ======= HEADER ======= -->
+<header class="site-header" id="siteHeader">
+  <div class="hdr-container">
+    <a class="brand" href="index.html" aria-label="Emtithal Home">
+      <img src="images-/logo-01.png" alt="Emtithal Logo">
+    </a>
+
+    <nav aria-label="Primary">
+      <ul class="main-menu" id="mainMenu">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+
+        <li id="menuServices">
+          <a href="services.html">Services <span class="caret">▾</span></a>
+          <div class="dropdown" id="servicesDropdown">
+            <a href="environmental.html">Environmental Consultancy</a>
+            <a href="mobile-lab.html">Mobile Lab</a>
+            <a href="pest-control.html">Pest Control</a>
+          </div>
+        </li>
+
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+
+    <a class="btn btn-primary" href="contact.html#contactForm">Get a Quote</a>
+    <button id="navToggle" class="nav-toggle" aria-expanded="false" aria-controls="mainMenu">☰</button>
+  </div>
+</header>
+
+<!-- ======= HERO ======= -->
+<section class="hero">
+  <div class="hero-inner">
+    <h1>Blog & Resources</h1>
+    <p class="lead">Guides, checklists, and field notes from Environmental, Mobile Lab, and IPM work across Saudi Arabia.</p>
+  </div>
+</section>
+
+<!-- ======= FILTER BAR ======= -->
+<div class="container" style="margin-top:-26px">
+  <div class="filter-wrap" id="filterBar" role="region" aria-label="Blog filters">
+    <div class="filter-grid">
+      <input id="search" class="input" type="search" placeholder="Search posts… (e.g., termite, audit, swab)"/>
+      <select id="category" class="select" aria-label="Filter by category">
+        <option value="all">All categories</option>
+        <option value="Pest Control">Pest Control</option>
+        <option value="IPM">IPM</option>
+        <option value="Fumigation">Fumigation</option>
+        <option value="Environmental">Environmental</option>
+        <option value="Mobile Lab">Mobile Lab</option>
+        <option value="Compliance">Compliance</option>
+      </select>
+      <select id="sort" class="select" aria-label="Sort posts">
+        <option value="new">Newest first</option>
+        <option value="old">Oldest first</option>
+        <option value="pop">Most popular</option>
+      </select>
+
+      <div class="chips" id="chipRow" aria-label="Filter by tag">
+        <span class="chip" data-tag="checklist">Checklist</span>
+        <span class="chip" data-tag="audit">Audit</span>
+        <span class="chip" data-tag="termites">Termites</span>
+        <span class="chip" data-tag="rodents">Rodents</span>
+        <span class="chip" data-tag="air">Air Quality</span>
+        <span class="chip" data-tag="swabs">Swabs</span>
+        <span class="chip" data-tag="CAPA">CAPA</span>
+      </div>
+
+      <div class="count"><span id="resultCount">0</span> posts</div>
+    </div>
+    <div style="margin-top:10px;display:flex;gap:10px;align-items:center;justify-content:flex-end">
+      <button id="clearFilters" class="clear-btn" type="button">Clear filters</button>
+    </div>
+  </div>
+</div>
+
+<!-- ======= BLOG GRID ======= -->
+<section class="section" style="padding-top:56px">
+  <div class="container">
+    <div class="grid grid-3" id="postGrid">
+      <!-- Card template: data attributes power the filter/sort -->
+      <article class="card"
+        data-category="Pest Control"
+        data-tags="checklist,IPM"
+        data-date="2025-08-05"
+        data-views="642"
+        data-title="5 Quick Wins to Prevent Summer Pests"
+        data-excerpt="Reduce food, water, and shelter that attract common invaders at home and at work.">
+        <img class="thumb" src="images-/blog--1.jpg" alt="Preventing summer pests">
+        <div class="card-body">
+          <div class="meta"><span class="badge">Pest Control</span><span>Aug 5, 2025</span></div>
+          <h3><a href="#">5 Quick Wins to Prevent Summer Pests</a></h3>
+          <p>Simple routines to reduce food, water, and shelter that attract common invaders.</p>
+        </div>
+      </article>
+
+      <article class="card"
+        data-category="Compliance"
+        data-tags="checklist,audit"
+        data-date="2025-07-18"
+        data-views="910"
+        data-title="Restaurant IPM Checklist (Audit-Ready)"
+        data-excerpt="Documentation, monitoring devices, sanitation practices, and records for inspections.">
+        <img class="thumb" src="images-/blog--2.jpg" alt="Restaurant IPM checklist">
+        <div class="card-body">
+          <div class="meta"><span class="badge">Compliance</span><span>Jul 18, 2025</span></div>
+          <h3><a href="#">Restaurant IPM Checklist (Audit-Ready)</a></h3>
+          <p>Documentation, monitoring devices, and sanitation practices that pass inspections.</p>
+        </div>
+      </article>
+
+      <article class="card"
+        data-category="Pest Control"
+        data-tags="termites"
+        data-date="2025-06-11"
+        data-views="388"
+        data-title="Termite Warning Signs & First Steps"
+        data-excerpt="Spot trouble early and understand treatment options that protect your property.">
+        <img class="thumb" src="images-/blog--3.jpg" alt="Termite signs and treatment">
+        <div class="card-body">
+          <div class="meta"><span class="badge">Pest Control</span><span>Jun 11, 2025</span></div>
+          <h3><a href="#">Termite Warning Signs & First Steps</a></h3>
+          <p>Spot trouble early and understand treatment options that protect your property.</p>
+        </div>
+      </article>
+
+      <article class="card"
+        data-category="Environmental"
+        data-tags="air,monitoring,audit"
+        data-date="2025-05-28"
+        data-views="274"
+        data-title="Understanding PM2.5 in Facility Air Monitoring"
+        data-excerpt="How to read PM2.5 numbers, common sources, and what mitigations actually work.">
+        <img class="thumb" src="images-/bg-6.jpg" alt="Air quality monitoring">
+        <div class="card-body">
+          <div class="meta"><span class="badge">Environmental</span><span>May 28, 2025</span></div>
+          <h3><a href="#">Understanding PM2.5 in Facility Air Monitoring</a></h3>
+          <p>How to read PM2.5 numbers, common sources, and what mitigations actually work.</p>
+        </div>
+      </article>
+
+      <article class="card"
+        data-category="Mobile Lab"
+        data-tags="swabs,CAPA,checklist"
+        data-date="2025-05-05"
+        data-views="321"
+        data-title="ATP Swabs: Pass/Fail Thresholds & Retest Plan"
+        data-excerpt="Set thresholds, trend by zone, and tie failures to CAPA and training moments.">
+        <img class="thumb" src="images-/service-1.jpg" alt="ATP swabs and retest plan">
+        <div class="card-body">
+          <div class="meta"><span class="badge">Mobile Lab</span><span>May 5, 2025</span></div>
+          <h3><a href="#">ATP Swabs: Pass/Fail Thresholds & Retest Plan</a></h3>
+          <p>Set thresholds, trend by zone, and tie failures to CAPA and training moments.</p>
+        </div>
+      </article>
+
+      <article class="card"
+        data-category="IPM"
+        data-tags="rodents,checklist"
+        data-date="2025-04-20"
+        data-views="512"
+        data-title="Rodent Mapping: From Devices to Decisions"
+        data-excerpt="Placement maps, trending captures, and action thresholds that drive outcomes.">
+        <img class="thumb" src="images-/service-2.jpg" alt="Rodent devices and maps">
+        <div class="card-body">
+          <div class="meta"><span class="badge">IPM</span><span>Apr 20, 2025</span></div>
+          <h3><a href="#">Rodent Mapping: From Devices to Decisions</a></h3>
+          <p>Placement maps, trending captures, and action thresholds that drive outcomes.</p>
+        </div>
+      </article>
+
+      <article class="card"
+        data-category="Fumigation"
+        data-tags="audit,checklist"
+        data-date="2025-03-14"
+        data-views="233"
+        data-title="Warehouse Fumigation: Pre-Prep & Safety Sheet"
+        data-excerpt="Isolation, signage, gas monitoring, and records you need for industrial fumigation.">
+        <img class="thumb" src="images-/service-3.jpg" alt="Warehouse fumigation">
+        <div class="card-body">
+          <div class="meta"><span class="badge">Fumigation</span><span>Mar 14, 2025</span></div>
+          <h3><a href="#">Warehouse Fumigation: Pre-Prep & Safety Sheet</a></h3>
+          <p>Isolation, signage, gas monitoring, and records for industrial fumigation.</p>
+        </div>
+      </article>
+
+      <article class="card"
+        data-category="Compliance"
+        data-tags="audit,CAPA"
+        data-date="2025-02-02"
+        data-views="458"
+        data-title="Close the Loop: Turning Audit Findings into CAPA"
+        data-excerpt="Make findings actionable with owners, deadlines, and verification steps.">
+        <img class="thumb" src="images-/bg-4.jpg" alt="Audit to CAPA">
+        <div class="card-body">
+          <div class="meta"><span class="badge">Compliance</span><span>Feb 2, 2025</span></div>
+          <h3><a href="#">Close the Loop: Turning Audit Findings into CAPA</a></h3>
+          <p>Make findings actionable with owners, deadlines, and verification steps.</p>
+        </div>
+      </article>
+
+      <article class="card"
+        data-category="Environmental"
+        data-tags="air,checklist"
+        data-date="2024-12-12"
+        data-views="189"
+        data-title="EIA Basics: What Inspectors Actually Read"
+        data-excerpt="Keep it crisp: maps, inventories, monitoring plan, and the right registers.">
+        <img class="thumb" src="images-/bg-5.jpg" alt="EIA basics">
+        <div class="card-body">
+          <div class="meta"><span class="badge">Environmental</span><span>Dec 12, 2024</span></div>
+          <h3><a href="#">EIA Basics: What Inspectors Actually Read</a></h3>
+          <p>Keep it crisp: maps, inventories, monitoring plan, and the right registers.</p>
+        </div>
+      </article>
+    </div>
+
+    <p id="noResults" class="muted hidden" style="margin-top:16px">No posts match your filters. Try clearing a tag or changing category.</p>
+  </div>
+</section>
+
+<!-- ======= FOOTER ======= -->
+<footer class="footer-modern v2">
+  <div class="container footer-cta">
+    <p>Need an audit or program fast? We’re ready.</p>
+    <a class="btn btn-primary" href="contact.html#contactForm">Request a Free Inspection</a>
+  </div>
+
+  <div class="container footer-columns">
+    <div>
+      <h5 class="foot-title">
+        <span class="foot-ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 3h7l5 5v13a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Zm7 1.5V9h4.5L13 4.5ZM8 11h8v1.8H8V11Zm0 3.8h8v1.8H8V14.8Zm0 3.8h5.5v1.8H8V18.6Z"/></svg>
+        </span>
+        CONTENT
+      </h5>
+      <ul class="foot-links">
+        <li><a href="services.html">Popular Services</a></li>
+        <li><a href="blog.html">Guides &amp; News</a></li>
+        <li><a href="services.html#before-after">Before &amp; After</a></li>
+      </ul>
+    </div>
+    <div>
+      <h5 class="foot-title">
+        <span class="foot-ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 1 1 0 20 10 10 0 0 1 0-20Zm0 6a1.25 1.25 0 1 0 0 2.5A1.25 1.25 0 0 0 12 8Zm1.6 9h-3.2v-1.8h1.2V12h-1.2v-1.8h2a1 1 0 0 1 1 1v3.8h1.2V17Z"/></svg>
+        </span>
+        INFORMATION
+      </h5>
+      <ul class="foot-links">
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="services.html">Our Services</a></li>
+        <li><a href="contact.html#contactForm">Request Service</a></li>
+      </ul>
+    </div>
+    <div>
+      <h5 class="foot-title">
+        <span class="foot-ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 4 6v6c0 5 3.4 8.6 8 10 4.6-1.4 8-5 8-10V6l-8-4Zm-1.2 13.4-3.2-3.2 1.4-1.4 1.8 1.8 3.9-3.9 1.4 1.4-5.3 5.3Z"/></svg>
+        </span>
+        SUPPORT &amp; LEGAL
+      </h5>
+      <ul class="foot-links">
+        <li><a href="terms.html">Terms &amp; Conditions</a></li>
+        <li><a href="privacy.html">Privacy Policy</a></li>
+        <li><a href="cookies.html">Cookies Policy</a></li>
+      </ul>
+    </div>
+    <div>
+      <h5 class="foot-title">
+        <span class="foot-ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 3H4a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h3l5 3 5-3h3a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2Zm-3 7H7V8h10v2Zm0 4H7v-2h10v2Z"/></svg>
+        </span>
+        CONNECT WITH US
+      </h5>
+      <div class="social-row" aria-label="Social links">
+        <a class="social" href="#" aria-label="Facebook"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M22 12.07C22 6.57 17.52 2.1 12 2.1S2 6.57 2 12.07c0 4.98 3.66 9.11 8.44 9.93v-7.02H7.9v-2.9h2.54V9.75c0-2.5 1.49-3.89 3.77-3.89 1.09 0 2.23.2 2.23.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56v1.86h2.78l-.44 2.9h-2.34V22c4.78-.82 8.44-4.95 8.44-9.93Z"/></svg></a>
+        <a class="social" href="#" aria-label="Instagram"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2.2c3.2 0 3.58.01 4.85.07 1.17.05 1.96.24 2.67.51.73.28 1.35.66 1.96 1.27.6.6.99 1.22 1.26 1.95.27.71.46 1.5.52 2.67.05 1.27.06 1.65.06 4.85s-.01 3.58-.06 4.85c-.06 1.17-.25 1.95-.52 2.67-.27.73-.66 1.35-1.26 1.95-.61.61-1.23.99-1.96 1.27-.71.27-1.5.46-2.67.51-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.96-.24-2.67-.51a5.3 5.3 0 0 1-1.96-1.27 5.3 5.3 0 0 1-1.27-1.95c-.27-.72-.46-1.5-.51-2.67C2.21 15.58 2.2 15.2 2.2 12s.01-3.58.07-4.85c.05-1.17.24-1.96.51-2.67.28-.73.66-1.35 1.27-1.96.6-.6 1.22-.99 1.95-1.26.71-.27 1.5-.46 2.67-.51C8.42 2.21 8.8 2.2 12 2.2Zm0 3.5a6.5 6.5 0 1 1 0 13 6.5 6.5 0 0 1 0-13Zm5.2-2.76a1.24 1.24 0 1 1 0 2.48 1.24 1.24 0 0 1 0-2.48Z"/></svg></a>
+        <a class="social" href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M20.45 20.45h-3.55v-5.68c0-1.36-.02-3.11-1.9-3.11-1.9 0-2.19 1.48-2.19 3v5.79H9.26V9.5h3.41v1.49h.05c.48-.91 1.65-1.87 3.39-1.87 3.62 0 4.29 2.38 4.29 5.47v5.86ZM5.34 8.01a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12Zm-1.78 12.44h3.56V9.5H3.56v10.95Z"/></svg></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="container footer-sub">
+    <div>Emtithal Environmental Consulting Projects.</div>
+    <div>Pest Control • Environmental • Food Safety • HSE • IPM</div>
+  </div>
+
+  <div class="foot-bottom">
+    <div class="container bottom-inner">
+      <img class="bottom-logo" src="images-/logo-01.png" alt="Emtithal Logo">
+      <div>&copy; 2025 Emtithal Consulting. All rights reserved. · Developed by
+        <a href="mailto:ismailderia123@gmail.com">Ismail Deria</a>
+      </div>
+      <a class="btn ghost" href="contact.html#contactForm">Get Started</a>
+    </div>
+  </div>
+</footer>
+
+<!-- FABs -->
+<a class="whatsapp-btn" href="https://wa.me/966559906886" target="_blank" aria-label="Chat on WhatsApp" rel="noopener">
+  <svg viewBox="0 0 32 32" aria-hidden="true"><path fill="currentColor" d="M19.1 17.4c-.2-.1-1-.5-1.2-.6s-.3-.1-.5.1c-.1.2-.6.6-.7.7-.1.1-.3.1-.5 0-.2-.1-.9-.3-1.7-1.1-.6-.6-1.1-1.3-1.2-1.5-.1-.2 0-.3.1-.4.1-.1.2-.3.3-.4.1-.1.1-.2.2-.3.1-.1.1-.2 0-.4-.1-.2-.5-1.2-.7-1.6-.2-.4-.4-.3-.5-.3h-.4c-.1 0-.4.1-.6.3-.2.2-.8.8-.8 1.9s.8 2.1.9 2.2c.1.1 1.6 2.5 3.9 3.5.5.2.9.4 1.2.5.5.2 1 .2 1.3.1.4-.1 1.2-.5 1.4-1 .2-.5.2-.9.2-1 0-.1-.1-.1-.3-.2zM16 5.3c-5.9 0-10.7 4.8-10.7 10.7 0 2 .6 3.9 1.6 5.5L6 27l5.7-1.5c1.6.9 3.4 1.4 5.3 1.4 5.9 0 10.7-4.8 10.7-10.7S21.9 5.3 16 5.3zm0 19.3c-1.7 0-3.3-.5-4.7-1.3l-.3-.2-3.4.9.9-3.3-.2-.3c-.9-1.4-1.4-3-1.4-4.7 0-4.9 4-8.9 8.9-8.9s8.9 4 8.9 8.9-4 8.9-8.9 8.9z"/></svg>
+</a>
+
+<button id="backToTop" class="back-to-top" aria-label="Back to top" title="Back to top">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+</button>
+
+<script>
+/* ===== Header scroll behavior ===== */
+const hdr=document.getElementById('siteHeader');
+addEventListener('scroll',()=>hdr.classList.toggle('scrolled', scrollY>10),{passive:true});
+
+/* ===== Mobile menu ===== */
+const navToggle=document.getElementById('navToggle');
+const mainMenu=document.getElementById('mainMenu');
+navToggle?.addEventListener('click',()=>{
+  const open=mainMenu.classList.toggle('open');
+  navToggle.setAttribute('aria-expanded',open);
+});
+
+/* ===== Mobile dropdown (tap) + gentle auto-hide ===== */
+const menuServices=document.getElementById('menuServices');
+if(menuServices){
+  let hideTimer;
+  const HIDE_AFTER=700; // ms
+  const link=menuServices.querySelector('a');
+  link.addEventListener('click',e=>{
+    if(innerWidth<=760){ e.preventDefault(); menuServices.classList.toggle('open-dd'); }
+  });
+  menuServices.addEventListener('pointerenter',()=>clearTimeout(hideTimer));
+  menuServices.addEventListener('pointerleave',()=>hideTimer=setTimeout(()=>menuServices.classList.remove('open-dd'),HIDE_AFTER));
+  document.addEventListener('click',e=>{
+    if(innerWidth<=760 && !menuServices.contains(e.target)) menuServices.classList.remove('open-dd');
+  },{passive:true});
+}
+
+/* ===== Desktop hover-intent for dropdowns ===== */
+let ddWired=false;
+function wireDropdownTimers(){
+  if(innerWidth<=760){ unwireDropdownTimers(); return; }
+  if(ddWired) return;
+  const items=[...document.querySelectorAll('.main-menu > li')];
+  items.forEach(li=>{
+    const dd=li.querySelector('.dropdown'); if(!dd) return;
+    let t;
+    const show=()=>{ clearTimeout(t); dd.classList.add('js-open'); };
+    const hide=()=>{ t=setTimeout(()=>dd.classList.remove('js-open'), 250); };
+    li.__ddShow=show; li.__ddHide=hide;
+    li.addEventListener('mouseenter', show);
+    li.addEventListener('mouseleave', hide);
+    dd.addEventListener('mouseenter', show);
+    dd.addEventListener('mouseleave', hide);
+  });
+  ddWired=true;
+}
+function unwireDropdownTimers(){
+  const items=[...document.querySelectorAll('.main-menu > li')];
+  items.forEach(li=>{
+    const dd=li.querySelector('.dropdown'); if(!dd) return;
+    if(li.__ddShow){ li.removeEventListener('mouseenter', li.__ddShow); dd.removeEventListener('mouseenter', li.__ddShow); }
+    if(li.__ddHide){ li.removeEventListener('mouseleave', li.__ddHide); dd.removeEventListener('mouseleave', li.__ddHide); }
+    dd.classList.remove('js-open'); li.__ddShow=null; li.__ddHide=null;
+  });
+  ddWired=false;
+}
+addEventListener('load', wireDropdownTimers);
+addEventListener('resize', ()=>{ setTimeout(()=>{ unwireDropdownTimers(); wireDropdownTimers(); }, 150); }, {passive:true});
+
+/* ===== Back to top ===== */
+const backBtn=document.getElementById('backToTop');
+function toggleTop(){ backBtn.classList.toggle('show', scrollY>280); }
+addEventListener('scroll', toggleTop, {passive:true}); toggleTop();
+backBtn.addEventListener('click', ()=>window.scrollTo({top:0,behavior:'smooth'}));
+
+/* ===== Blog filter & sort ===== */
+(function(){
+  const grid=document.getElementById('postGrid');
+  const cards=[...grid.children];
+  const search=document.getElementById('search');
+  const category=document.getElementById('category');
+  const sort=document.getElementById('sort');
+  const chipRow=document.getElementById('chipRow');
+  const clearBtn=document.getElementById('clearFilters');
+  const resultCount=document.getElementById('resultCount');
+  const noResults=document.getElementById('noResults');
+
+  const state={ q:'', cat:'all', tags:new Set(), sort:'new' };
+
+  function normalize(s){ return (s||'').toLowerCase().trim(); }
+
+  function apply(){
+    // Filter
+    let visible=[];
+    const q=normalize(state.q);
+    const cat=state.cat;
+    const tags=[...state.tags];
+
+    cards.forEach(card=>{
+      const cCat=card.dataset.category;
+      const cTags=(card.dataset.tags||'').split(',').map(t=>normalize(t));
+      const title=normalize(card.dataset.title);
+      const excerpt=normalize(card.dataset.excerpt);
+
+      const matchCat=(cat==='all' || cCat===cat);
+      const matchTags=(tags.length===0 || tags.every(t=>cTags.includes(normalize(t))));
+      const matchQ=(q==='' || title.includes(q) || excerpt.includes(q));
+
+      const ok=matchCat && matchTags && matchQ;
+      card.classList.toggle('hidden', !ok);
+      if(ok) visible.push(card);
+    });
+
+    // Sort
+    const by = state.sort;
+    visible.sort((a,b)=>{
+      if(by==='new') return new Date(b.dataset.date) - new Date(a.dataset.date);
+      if(by==='old') return new Date(a.dataset.date) - new Date(b.dataset.date);
+      if(by==='pop') return (+b.dataset.views) - (+a.dataset.views);
+      return 0;
+    });
+    // Re-append in new order (only visible)
+    visible.forEach(c=>grid.appendChild(c));
+
+    // Count & empty state
+    resultCount.textContent = visible.length;
+    noResults.classList.toggle('hidden', visible.length>0);
+  }
+
+  // Event wiring
+  search.addEventListener('input', e=>{ state.q=e.target.value; apply(); });
+  category.addEventListener('change', e=>{ state.cat=e.target.value; apply(); });
+  sort.addEventListener('change', e=>{ state.sort=e.target.value; apply(); });
+  chipRow.addEventListener('click', e=>{
+    const chip=e.target.closest('.chip'); if(!chip) return;
+    const tag=chip.dataset.tag;
+    if(chip.classList.toggle('active')) state.tags.add(tag); else state.tags.delete(tag);
+    apply();
+  });
+  clearBtn.addEventListener('click', ()=>{
+    state.q=''; state.cat='all'; state.tags.clear(); state.sort='new';
+    search.value=''; category.value='all'; sort.value='new';
+    chipRow.querySelectorAll('.chip.active').forEach(c=>c.classList.remove('active'));
+    apply();
+  });
+
+  apply();
+})();
+</script>
+<script>
+    (async function(){
+      const API = 'http://localhost:5050'; // change to your domain in prod
+      const grid = document.getElementById('postGrid');
+      const count = document.getElementById('resultCount');
+      const noResults = document.getElementById('noResults');
+    
+      // wire existing filters
+      const q = document.getElementById('search');
+      const cat = document.getElementById('category');
+      const sort = document.getElementById('sort');
+      const chips = document.getElementById('chipRow');
+    
+      let tags = new Set();
+    
+      function cardHTML(p){
+        const d = new Date(p.date||Date.now());
+        const dStr = d.toLocaleDateString('en-GB',{month:'short', day:'numeric', year:'numeric'});
+        const img = p.image ? p.image : 'images-/blog--1.jpg';
+        return `
+          <article class="card">
+            <img class="thumb" src="${img}" alt="">
+            <div class="card-body">
+              <div class="meta"><span class="badge">${p.category}</span><span>${dStr}</span></div>
+              <h3><a href="#">${p.title}</a></h3>
+              <p>${p.excerpt||''}</p>
+            </div>
+          </article>`;
+      }
+    
+      async function load(){
+        const qs = new URLSearchParams({
+          q: (q.value||'').trim(),
+          category: cat.value||'all',
+          tags: [...tags].join(','),
+          sort: sort.value||'new',
+          limit: 60
+        });
+        const r = await fetch(`${API}/api/posts?`+qs.toString());
+        const j = await r.json();
+        grid.innerHTML = j.items.map(cardHTML).join('');
+        count.textContent = j.items.length;
+        noResults.classList.toggle('hidden', j.items.length>0);
+      }
+    
+      q.addEventListener('input', debounce(load, 250));
+      cat.addEventListener('change', load);
+      sort.addEventListener('change', load);
+      chips.addEventListener('click', (e)=>{
+        const c = e.target.closest('.chip'); if(!c) return;
+        c.classList.toggle('active');
+        const tag = c.dataset.tag;
+        if(c.classList.contains('active')) tags.add(tag); else tags.delete(tag);
+        load();
+      });
+    
+      function debounce(fn, ms){ let t; return (...a)=>{ clearTimeout(t); t=setTimeout(()=>fn(...a), ms); }; }
+    
+      load();
+    })();
+    </script>
+    
+</body>
+</html>

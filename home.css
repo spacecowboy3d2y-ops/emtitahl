@@ -1,0 +1,168 @@
+/* ========== THEME ========== */
+:root{
+    --teal:#1f4f4c;        /* brand dark teal */
+    --teal-2:#0f6f69;      /* accent teal */
+    --orange:#e7a33a;      /* CTA */
+    --ink:#232323;
+    --muted:#6b7280;
+    --bg:#ffffff;
+    --card:#f8fafb;
+    --radius:14px;
+    --shadow:0 10px 30px rgba(0,0,0,.08);
+  }
+  
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    font-family:"Poppins",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+    color:var(--ink);
+    background:var(--bg);
+    margin:0;
+    line-height:1.6;
+  }
+  
+  /* ========== LAYOUT HELPERS ========== */
+  .container{
+    width:min(800px, 92%);
+    margin-inline:auto;
+  }
+  .section{padding:72px 0}
+  .section-title{
+    font-size: clamp(1.6rem, 2vw + 1rem, 2.1rem);
+    text-align:center;
+    margin:0 0 26px;
+    color:var(--ink);
+  }
+  .section-title.light{color:#fff;}
+  
+  /* ========== HEADER ========== */
+  .site-header{
+    position:sticky; top:0; z-index:50;
+    background:var(--teal);
+    color:#fff;
+    box-shadow: 0 2px 12px rgba(0,0,0,.08);
+  }
+  .header-inner{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:14px 0;
+  }
+  .brand img{height:40px; display:block}
+  /* nav */
+  nav ul{
+    display:flex; gap:28px; list-style:none; margin:0; padding:0;
+  }
+  nav a{
+    color:#fff; text-decoration:none; font-weight:600; letter-spacing:.2px;
+    position:relative; padding-bottom:4px;
+  }
+  nav a::after{
+    content:""; position:absolute; left:0; bottom:0; height:2px; width:0; background:var(--orange);
+    transition:width .25s ease;
+  }
+  nav a:hover::after{width:100%}
+  
+  /* ========== HERO ========== */
+  .hero{
+    position:relative;
+    min-height:70vh;
+    display:grid; place-items:center;
+    background:url('pest-control-hero.jpg') center/cover no-repeat;
+  }
+  .hero-overlay{
+    position:absolute; inset:0;
+    background:linear-gradient(180deg, rgba(31,79,76,.85), rgba(31,79,76,.55));
+  }
+  .hero-content{
+    position:relative; text-align:center; color:#fff;
+  }
+  .hero h1{margin:0 0 10px; font-weight:700; letter-spacing:.3px}
+  .hero p{margin:0 0 20px; color:#eef2f3}
+  
+  /* ========== BUTTONS ========== */
+  .btn{
+    display:inline-block; padding:12px 22px; border-radius:999px;
+    font-weight:700; text-decoration:none; letter-spacing:.2px;
+    transform:translateZ(0); transition:transform .2s ease, box-shadow .2s ease, background .2s ease;
+    box-shadow:0 6px 16px rgba(0,0,0,.12);
+  }
+  .btn-primary{background:var(--orange); color:#fff}
+  .btn-primary:hover{transform:translateY(-2px) scale(1.02)}
+  .btn-dark{background:var(--teal); color:#fff}
+  .btn-dark:hover{background:var(--teal-2); transform:translateY(-2px)}
+  
+  /* ========== GRID & CARDS ========== */
+  .grid{
+    display:grid; gap:22px;
+    grid-template-columns:repeat(3, 1fr);
+  }
+  .card{
+    background:var(--card); border-radius:var(--radius);
+    padding:24px 22px; box-shadow:var(--shadow);
+    transition:transform .18s ease, box-shadow .18s ease, background .18s ease;
+  }
+  .card h3{margin:0 0 8px; color:var(--teal-2)}
+  .card p{margin:0; color:var(--muted)}
+  .card:hover{transform:translateY(-6px); box-shadow:0 16px 40px rgba(0,0,0,.09); background:#fff}
+  
+  /* ========== WHY SECTION ========== */
+  .why{background:var(--teal)}
+  .why-list{
+    display:grid; gap:12px; margin:18px auto 0; padding:0; max-width:800px;
+    grid-template-columns:repeat(2, 1fr); list-style:none;
+  }
+  .why-list li{
+    color:#e9f4f3; position:relative; padding-left:28px; font-weight:600;
+    opacity:.95;
+  }
+  .why-list li::before{
+    content:""; position:absolute; left:0; top:.55em; width:12px; height:12px;
+    border-radius:50%; background:var(--orange); box-shadow:0 0 0 4px rgba(231,163,58,.25);
+  }
+  
+  /* ========== CTA BAR ========== */
+  .cta{
+    background:linear-gradient(90deg, #fff, #f9fbfb);
+    padding:42px 0;
+  }
+  .cta-inner{
+    display:flex; align-items:center; justify-content:space-between; gap:20px;
+    background:#fff; border-radius:var(--radius); padding:22px 26px; box-shadow:var(--shadow);
+  }
+  .cta-inner p{margin:0; font-weight:700; color:var(--teal)}
+  
+  /* ========== FOOTER ========== */
+  footer{
+    background:#1b1b1b; color:#cfcfcf; text-align:center; padding:24px 12px; font-size:.95rem;
+  }
+  
+  /* ========== ANIMATIONS ========== */
+  .reveal{opacity:0; transform:translateY(24px); animation:reveal .7s ease-out both}
+  .reveal.delay-1{animation-delay:.15s}
+  .reveal.delay-2{animation-delay:.3s}
+  .reveal.delay-3{animation-delay:.45s}
+  .reveal.delay-4{animation-delay:.6s}
+  
+  @keyframes reveal{
+    to{opacity:1; transform:none}
+  }
+  
+  /* subtle button attention after load */
+  .btn-primary{animation:pop .6s ease-out .9s both}
+  @keyframes pop{
+    0%{transform:scale(.95); box-shadow:0 0 0 0 rgba(231,163,58,.0)}
+    80%{transform:scale(1.04)}
+    100%{transform:scale(1)}
+  }
+  
+  /* ========== RESPONSIVE ========== */
+  @media (max-width: 900px){
+    .grid{grid-template-columns:1fr 1fr}
+    .cta-inner{flex-direction:column; text-align:center}
+  }
+  @media (max-width: 560px){
+    nav ul{gap:16px; font-size:.95rem; flex-wrap:wrap}
+    .grid{grid-template-columns:1fr}
+    .hero{min-height:58vh}
+    .why-list{grid-template-columns:1fr}
+  }
+  

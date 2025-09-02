@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Admin Portal — Emtithal Consulting</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* Inferred theme tokens (can tweak to match your exact brand) */
+  --teal:#1f4f4c; 
+  --blue:#2a8bd8; 
+  --green:#22c55e;
+  --ink:#e7ecea;
+  --ink-muted:#a7b4b2;
+  --bg:#0f1111; 
+  --card:#151a1a;
+  --card-2:#111515;
+  --border:#1f2323;
+  --ring: 0 0 0 6px rgba(42,139,216,.18);
+  --shadow: 0 10px 30px rgba(0,0,0,.35);
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family:"Poppins","Cairo",system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial,"Noto Sans",sans-serif;
+  background:linear-gradient(180deg,var(--bg), #0b0c0c);
+  color:var(--ink);
+}
+
+/* Layout */
+.app{
+  display:grid;
+  grid-template-columns: 260px 1fr;
+  min-height:100vh;
+}
+.sidebar{
+  position:sticky; top:0; height:100vh;
+  background:linear-gradient(180deg, #122, var(--card));
+  border-right:1px solid var(--border);
+  padding:18px 14px;
+}
+.brand{
+  display:flex; align-items:center; gap:10px; padding:6px 10px; margin-bottom:16px;
+}
+.brand .logo{
+  width:38px; height:38px; border-radius:10px;
+  background:linear-gradient(135deg,var(--teal), var(--blue));
+  display:grid; place-items:center; font-weight:800; color:white; box-shadow:var(--shadow);
+}
+.brand .name{font-weight:800; letter-spacing:.2px}
+.search{
+  margin:10px 6px 16px; position:relative;
+}
+.search input{
+  width:100%; background:var(--card-2); border:1px solid var(--border);
+  border-radius:12px; padding:12px 14px; color:var(--ink);
+}
+.nav{ display:flex; flex-direction:column; gap:6px; }
+.nav a{
+  display:flex; align-items:center; gap:12px; padding:10px 12px; border-radius:12px;
+  color:var(--ink); text-decoration:none; border:1px solid transparent;
+}
+.nav a:hover{ background:rgba(42,139,216,.08); border-color:var(--border); }
+.nav a.active{ background:linear-gradient(90deg, rgba(42,139,216,.15), rgba(31,79,76,.15)); border-color:var(--border)}
+
+.main{
+  min-width:0; /* fix overflow */
+}
+.topbar{
+  position:sticky; top:0; z-index:5;
+  backdrop-filter: blur(10px);
+  background: rgba(15,17,17,.65);
+  border-bottom:1px solid var(--border);
+  display:flex; align-items:center; justify-content:space-between;
+  padding:10px 16px;
+}
+.actions{ display:flex; align-items:center; gap:10px; }
+.btn{
+  background:var(--card); border:1px solid var(--border); color:var(--ink);
+  padding:10px 12px; border-radius:12px; cursor:pointer;
+}
+.btn.primary{ background:linear-gradient(90deg, var(--teal), var(--blue)); border-color:transparent; color:white; }
+.btn.success{ background:linear-gradient(90deg, var(--green), #0ea34a); border-color:transparent; color:white; }
+.btn:focus{ outline:none; box-shadow:var(--ring); }
+
+.content{ padding:18px; }
+.grid{
+  display:grid; gap:16px;
+  grid-template-columns: repeat(12, 1fr);
+}
+.card{
+  background:var(--card); border:1px solid var(--border); border-radius:16px; padding:14px;
+  box-shadow: var(--shadow);
+}
+.kpi{ grid-column: span 3; }
+.kpi h3{ margin:8px 0 4px; font-size:14px; color:var(--ink-muted) }
+.kpi .value{ font-size:26px; font-weight:800 }
+.kpi .hint{ font-size:12px; color:var(--ink-muted) }
+
+/* Table */
+.table{ width:100%; border-collapse:collapse; font-size:14px }
+.table th, .table td{ border-bottom:1px solid var(--border); padding:12px }
+.table th{ text-align:left; color:var(--ink-muted); font-weight:600 }
+.table tr:hover td{ background:rgba(255,255,255,.02) }
+.badge{ padding:3px 8px; border:1px solid var(--border); border-radius:999px; font-size:12px }
+.badge.draft{ background:rgba(255,255,255,.03) }
+.badge.published{ background:rgba(34,197,94,.12); border-color:rgba(34,197,94,.35) }
+
+/* Forms */
+.form{ display:grid; gap:12px }
+.input, textarea, select{
+  width:100%; background:var(--card-2); border:1px solid var(--border); border-radius:12px;
+  padding:12px 14px; color:var(--ink);
+}
+label{ font-size:13px; color:var(--ink-muted) }
+.row{ display:grid; gap:12px; grid-template-columns:1fr 1fr }
+
+/* Media uploader */
+.dropzone{
+  border:1px dashed var(--border); border-radius:16px; padding:20px; text-align:center;
+  background:var(--card-2);
+}
+
+/* Footer */
+.footer{ padding:18px; color:var(--ink-muted); font-size:12px }
+
+/* Responsive */
+@media (max-width: 1024px){
+  .app{ grid-template-columns: 72px 1fr }
+  .brand .name, .search, .nav a span{ display:none }
+  .nav a{ justify-content:center }
+  .kpi{ grid-column: span 6; }
+}
+@media (max-width: 640px){
+  .grid{ grid-template-columns: repeat(6, 1fr) }
+  .kpi{ grid-column: span 6; }
+  .row{ grid-template-columns: 1fr }
+}
+
+/* RTL Support */
+html[dir="rtl"] body{ font-family:"Cairo","Poppins",system-ui }
+html[dir="rtl"] .table th, html[dir="rtl"] .table td{ text-align:right }
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="logo">EC</div>
+      <div class="name">Emtithal Admin</div>
+    </div>
+    <div class="search">
+      <input type="search" placeholder="Search…" />
+    </div>
+    <nav class="nav">
+      <a href="#dashboard" class="active"><span>🏠</span> <span>Dashboard</span></a>
+      <a href="#pages"><span>📄</span> <span>Pages</span></a>
+      <a href="#blog"><span>✍️</span> <span>Blog</span></a>
+      <a href="#media"><span>🖼️</span> <span>Media</span></a>
+      <a href="#leads"><span>📬</span> <span>Leads</span></a>
+      <a href="#settings"><span>⚙️</span> <span>Settings</span></a>
+      <a href="#users"><span>👤</span> <span>Users & Roles</span></a>
+    </nav>
+  </aside>
+  <main class="main">
+    <div class="topbar">
+      <div style="display:flex; align-items:center; gap:10px">
+        <button class="btn" id="toggleDir" title="Toggle LTR/RTL">↔️</button>
+        <strong>Admin Portal</strong>
+      </div>
+      <div class="actions">
+        <button class="btn">Preview Site</button>
+        <button class="btn success">Save Changes</button>
+        <button class="btn primary">Publish</button>
+      </div>
+    </div>
+
+    <div class="content">
+      <!-- KPIs -->
+      <section id="dashboard" class="grid" style="margin-bottom:14px">
+        <div class="card kpi">
+          <h3>Today&#39;s Visits</h3>
+          <div class="value" id="kpiVisits">1,284</div>
+          <div class="hint">+8% vs. yesterday</div>
+        </div>
+        <div class="card kpi">
+          <h3>New Leads</h3>
+          <div class="value" id="kpiLeads">23</div>
+          <div class="hint">Contact & quote forms</div>
+        </div>
+        <div class="card kpi">
+          <h3>Published Pages</h3>
+          <div class="value">12</div>
+          <div class="hint">2 drafts</div>
+        </div>
+        <div class="card kpi">
+          <h3>Media Storage</h3>
+          <div class="value">412 MB</div>
+          <div class="hint">85% free</div>
+        </div>
+      </section>
+
+      <!-- Pages manager -->
+      <section id="pages" class="card" style="margin-bottom:16px">
+        <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:6px">
+          <h2 style="margin:6px 0">Pages</h2>
+          <div>
+            <button class="btn">New Page</button>
+          </div>
+        </div>
+        <table class="table">
+          <thead><tr><th>Title</th><th>Slug</th><th>Status</th><th>Updated</th><th></th></tr></thead>
+          <tbody id="pagesTable">
+            <tr><td>Home</td><td>/</td><td><span class="badge published">Published</span></td><td>2025-08-20</td><td><button class="btn">Edit</button></td></tr>
+            <tr><td>Services</td><td>/services</td><td><span class="badge published">Published</span></td><td>2025-08-22</td><td><button class="btn">Edit</button></td></tr>
+            <tr><td>Environmental Consulting</td><td>/environmental</td><td><span class="badge draft">Draft</span></td><td>2025-08-26</td><td><button class="btn">Edit</button></td></tr>
+            <tr><td>Contact</td><td>/contact</td><td><span class="badge published">Published</span></td><td>2025-08-28</td><td><button class="btn">Edit</button></td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- Quick Editor -->
+      <section class="card" id="editor" style="margin-bottom:16px">
+        <h2 style="margin:6px 0 12px">Quick Edit</h2>
+        <form class="form" onsubmit="event.preventDefault(); demoSave();">
+          <div class="row">
+            <div>
+              <label for="title">Page Title</label>
+              <input id="title" class="input" placeholder="e.g., Environmental Consultancy" />
+            </div>
+            <div>
+              <label for="slug">Slug</label>
+              <input id="slug" class="input" placeholder="/environmental" />
+            </div>
+          </div>
+          <div>
+            <label for="excerpt">Short Summary</label>
+            <input id="excerpt" class="input" placeholder="1–2 lines shown on cards and SEO description" />
+          </div>
+          <div>
+            <label for="content">Main Content</label>
+            <textarea id="content" rows="8" placeholder="Write or paste your content here…"></textarea>
+          </div>
+          <div class="row">
+            <div>
+              <label for="hero">Hero Image</label>
+              <div class="dropzone" id="drop">
+                Drag & drop image here (or click to upload)
+                <input type="file" id="hero" accept="image/*" style="display:none" />
+              </div>
+            </div>
+            <div>
+              <label>SEO</label>
+              <div class="row">
+                <input class="input" id="seoTitle" placeholder="SEO Title (<=60 chars)" />
+                <input class="input" id="seoDesc" placeholder="Meta description (<=160 chars)" />
+              </div>
+            </div>
+          </div>
+          <div style="display:flex; gap:10px; justify-content:flex-end">
+            <select id="status">
+              <option value="draft">Save as Draft</option>
+              <option value="published">Publish</option>
+            </select>
+            <button class="btn">Save</button>
+            <button class="btn primary" type="button" onclick="demoPublish()">Publish</button>
+          </div>
+        </form>
+      </section>
+
+      <!-- Blog manager -->
+      <section id="blog" class="card" style="margin-bottom:16px">
+        <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:6px">
+          <h2 style="margin:6px 0">Blog</h2>
+          <div><button class="btn">New Post</button></div>
+        </div>
+        <table class="table">
+          <thead><tr><th>Title</th><th>Category</th><th>Status</th><th>Updated</th><th></th></tr></thead>
+          <tbody>
+            <tr><td>Integrated Pest Management</td><td>Insights</td><td><span class="badge published">Published</span></td><td>2025-08-18</td><td><button class="btn">Edit</button></td></tr>
+            <tr><td>How to prepare for a site audit</td><td>Guides</td><td><span class="badge draft">Draft</span></td><td>2025-08-25</td><td><button class="btn">Edit</button></td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- Media -->
+      <section id="media" class="card" style="margin-bottom:16px">
+        <h2 style="margin:6px 0 12px">Media Library</h2>
+        <div class="dropzone" style="margin-bottom:12px">Drop images/videos here to upload</div>
+        <div class="grid">
+          <div class="card" style="grid-column: span 3"><img src="" alt="" style="display:block; width:100%; height:120px; background:#0e1111; border-radius:12px; border:1px solid var(--border)"><div style="margin-top:8px; font-size:12px; color:var(--ink-muted)">hero-1.jpg • 1920×1080</div></div>
+          <div class="card" style="grid-column: span 3"><img style="display:block; width:100%; height:120px; background:#0e1111; border-radius:12px; border:1px solid var(--border)"><div style="margin-top:8px; font-size:12px; color:var(--ink-muted)">lab-setup.png • 1400×900</div></div>
+          <div class="card" style="grid-column: span 3"><img style="display:block; width:100%; height:120px; background:#0e1111; border-radius:12px; border:1px solid var(--border)"><div style="margin-top:8px; font-size:12px; color:var(--ink-muted)">team.jpg • 2000×1333</div></div>
+          <div class="card" style="grid-column: span 3"><img style="display:block; width:100%; height:120px; background:#0e1111; border-radius:12px; border:1px solid var(--border)"><div style="margin-top:8px; font-size:12px; color:var(--ink-muted)">truck.webp • 1200×800</div></div>
+        </div>
+      </section>
+
+      <!-- Leads -->
+      <section id="leads" class="card" style="margin-bottom:16px">
+        <h2 style="margin:6px 0 12px">Contact & Quote Leads</h2>
+        <table class="table">
+          <thead><tr><th>Name</th><th>Email</th><th>Service</th><th>Message</th><th>Received</th><th></th></tr></thead>
+          <tbody>
+            <tr><td>Abdi</td><td>abdi@example.com</td><td>Termite Control</td><td>Need inspection for a new house…</td><td>2025-08-29</td><td><button class="btn">View</button></td></tr>
+            <tr><td>Salma</td><td>salma@example.com</td><td>Environmental Audit</td><td>Scope & quote for factory site…</td><td>2025-08-28</td><td><button class="btn">View</button></td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- Settings & Users -->
+      <section id="settings" class="card" style="margin-bottom:16px">
+        <h2 style="margin:6px 0 12px">Site Settings</h2>
+        <form class="form" onsubmit="event.preventDefault(); alert('Saved!');">
+          <div class="row">
+            <div>
+              <label for="brandName">Brand Name</label>
+              <input id="brandName" class="input" placeholder="Emtithal Environmental Consulting" value="Emtithal Consulting" />
+            </div>
+            <div>
+              <label for="primaryColor">Primary Color</label>
+              <input id="primaryColor" class="input" type="color" value="#2a8bd8" />
+            </div>
+          </div>
+          <div class="row">
+            <div>
+              <label for="phone">Phone</label>
+              <input id="phone" class="input" placeholder="+252 xx xxx xxxx" />
+            </div>
+            <div>
+              <label for="email">Email</label>
+              <input id="email" class="input" type="email" placeholder="info@example.com" />
+            </div>
+          </div>
+          <div>
+            <label for="address">Address</label>
+            <input id="address" class="input" placeholder="Burj Omar Building, Downtown Hargeisa" />
+          </div>
+          <div style="display:flex; justify-content:flex-end">
+            <button class="btn success">Save Settings</button>
+          </div>
+        </form>
+      </section>
+
+      <section id="users" class="card">
+        <h2 style="margin:6px 0 12px">Users & Roles</h2>
+        <table class="table">
+          <thead><tr><th>User</th><th>Role</th><th>Status</th><th></th></tr></thead>
+          <tbody>
+            <tr><td>Mubarik</td><td>Admin</td><td><span class="badge published">Active</span></td><td><button class="btn">Manage</button></td></tr>
+            <tr><td>Warsame</td><td>Editor</td><td><span class="badge published">Active</span></td><td><button class="btn">Manage</button></td></tr>
+            <tr><td>Hodan</td><td>Author</td><td><span class="badge draft">Suspended</span></td><td><button class="btn">Manage</button></td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <div class="footer">© 2025 Emtithal Consulting — Admin Portal</div>
+    </div>
+  </main>
+</div>
+
+<script>
+// Direction toggle for Arabic/English
+document.getElementById('toggleDir').addEventListener('click', () => {
+  const html = document.documentElement;
+  html.dir = (html.dir === 'rtl') ? 'ltr' : 'rtl';
+});
+
+// Demo dropzone behavior
+const drop = document.getElementById('drop');
+if (drop){
+  drop.addEventListener('click', () => document.getElementById('hero').click());
+  drop.addEventListener('dragover', e => { e.preventDefault(); drop.style.borderColor = 'var(--blue)'; });
+  drop.addEventListener('dragleave', e => { drop.style.borderColor = 'var(--border)'; });
+  drop.addEventListener('drop', e => { e.preventDefault(); drop.style.borderColor = 'var(--green)'; drop.innerHTML='✅ File ready (demo)'; });
+}
+
+// Demo save/publish
+function demoSave(){ alert('Saved (demo). Wire this to your backend or PHP routes.'); }
+function demoPublish(){ alert('Published (demo).'); }
+</script>
+</body>
+</html>

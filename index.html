@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Emtithal Pest Control | Fast, Safe & Guaranteed</title>
+<meta name="description" content="Fast, safe, and guaranteed pest control for homes, businesses, and industries across Saudi Arabia." />
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --teal:#1f4f4c; --blue:#2a8bd8;
+  --ink:#0b0c11; --ink-on-dark:#e9eeee;
+  --muted:#a7b4b2; --bg:#0f1111; --card:#151919; --line:#1f2729;
+  --shadow:0 14px 40px rgba(0,0,0,.28);
+  --header-h:72px; --gap:22px;
+  --hdr-dark:#103a38; --hdr-light:#ffffff;
+  --hero-top: clamp(110px, 13vh, 170px);
+  --dd-hide-delay:.55s;
+}
+
+/* base */
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:var(--bg);color:var(--ink-on-dark);
+  font-family:"Poppins","Cairo",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+  line-height:1.6; padding-top:calc(var(--header-h) + 10px);
+  -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+}
+img{max-width:100%;display:block}
+a{text-decoration:none}
+.container{width:min(1160px,92%);margin-inline:auto}
+.section{padding:84px 0}
+.title{color:#fff;margin:0 0 12px;font-size:clamp(1.7rem,2vw+1rem,2.3rem)}
+.lead{color:#cfe7e5}
+.muted{color:var(--muted)}
+.btn{display:inline-block;padding:13px 22px;border-radius:999px;font-weight:700;box-shadow:0 10px 24px rgba(0,0,0,.35)}
+.btn-primary{background:var(--blue);color:#fff}
+.btn-dark{background:#0f3c3a;color:#fff}
+.btn-dark:hover{background:#0d4f49}
+
+/* ================= HEADER (new) ================= */
+.hdr-container{
+  width:min(1160px,92%);margin-inline:auto;
+  display:flex;align-items:center;justify-content:space-between;gap:18px
+}
+.site-header{
+  position:fixed; inset:0 0 auto; z-index:1000; height:72px;
+  display:flex; align-items:center; background:var(--hdr-dark); color:#e7f5f4;
+  box-shadow:0 6px 20px rgba(0,0,0,.35); transition:background .2s,height .2s,box-shadow .2s
+}
+.site-header.scrolled{
+  background:var(--hdr-light); color:var(--teal); height:64px;
+  box-shadow:0 8px 24px rgba(0,0,0,.15)
+}
+.brand img{height:52px}
+.main-menu{list-style:none;margin:0;padding:0;display:flex;gap:24px;align-items:center;position:relative}
+.main-menu>li{position:relative}
+.main-menu a{
+  color:inherit;font-weight:600;display:inline-block;
+  padding:8px 12px;border-radius:10px;line-height:1
+}
+/* Normal header hover = teal chip + white text */
+.site-header:not(.scrolled) .main-menu a:hover,
+.site-header:not(.scrolled) .main-menu a:focus-visible{
+  background:var(--teal); color:#fff;
+}
+/* Sticky header hover = white chip + teal text */
+.site-header.scrolled .main-menu a:hover,
+.site-header.scrolled .main-menu a:focus-visible{
+  background:#fff; color:var(--teal);
+  outline:1px solid color-mix(in srgb, var(--teal) 70%, transparent);
+  box-shadow:0 1px 0 rgba(0,0,0,.04)
+}
+.caret{margin-left:6px;display:inline-block;transform:translateY(-1px)}
+
+/* dropdown (white) */
+.dropdown{
+  position:absolute; top:calc(100% + 10px); left:0; min-width:260px;
+  background:#fff; border:1px solid #fff; border-radius:12px; padding:8px;
+  opacity:0; visibility:hidden; transform:translateY(8px);
+  pointer-events:none; will-change:opacity,transform;
+  transition:
+    opacity .13s ease var(--dd-hide-delay),
+    transform .13s ease var(--dd-hide-delay),
+    visibility 0s linear var(--dd-hide-delay);
+  box-shadow:0 16px 36px rgba(10,20,30,.15); z-index:1000;
+}
+.dropdown a{display:block;padding:10px 12px;border-radius:8px;color:var(--teal)}
+.dropdown a:hover{background:#1f4f4c;color:#fff}
+.main-menu li:hover>.dropdown,
+.main-menu .open-dd>.dropdown,
+.dropdown.js-open{opacity:1; visibility:visible; transform:translateY(0); pointer-events:auto; transition-delay:0s,0s,0s}
+/* mobile */
+.nav-toggle{display:none;background:#0b2b29;color:#fff;border:0;padding:10px 14px;border-radius:10px;font-weight:700}
+.site-header.scrolled .nav-toggle{background:#eef4f4;color:var(--teal)}
+@media (max-width:760px){
+  .nav-toggle{display:inline-block}
+  .main-menu{display:none;position:absolute;top:72px;left:4%;right:4%;background:var(--hdr-dark);padding:14px;border-radius:12px;flex-direction:column;gap:12px}
+  .site-header.scrolled .main-menu{background:#fff}
+  .main-menu.open{display:flex}
+  .dropdown{position:static;display:none;margin-top:-4px;box-shadow:none;border:0}
+  .main-menu .open-dd>.dropdown{display:block}
+}
+
+/* ================= HERO ================= */
+.hero{
+  position:relative; min-height:48vh;
+  padding-block-start: var(--hero-top);
+  padding-block-end: 72px;
+  display:grid; place-items:center; overflow:hidden; color:#fff;
+  background: url('images-/bg-3.jpg') center/cover no-repeat, #0f1a1a;
+  background-blend-mode:multiply;
+}
+.hero::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg, color-mix(in srgb, #000 24%, transparent), rgba(0,0,0,.15))}
+.hero-inner{position:relative;z-index:1;width:min(1160px,92%);margin-inline:auto;display:grid;grid-template-columns:1.15fr .85fr;align-items:center;gap:40px}
+.hero h1{margin:0 0 12px;font-weight:800;letter-spacing:.3px;font-size:clamp(1.9rem, 2.2vw + 1rem, 2.6rem)}
+.hero p{margin:0 0 22px;opacity:.96}
+.hero-card{background:#132323;border-radius:16px;padding:22px;box-shadow:var(--shadow);border:1px solid rgba(255,255,255,.06)}
+.hero-logo{max-width:340px;margin:0 auto}
+.hero-mark{position:absolute; right:4%; bottom:-4%; width:min(520px,40vw); opacity:.09; filter:grayscale(100%); mix-blend-mode:luminosity; pointer-events:none}
+
+/* ================= CARDS & GRID ================= */
+.grid{display:grid;gap:var(--gap)}
+.grid-3{grid-template-columns:repeat(3,1fr)}
+@media (max-width:980px){.hero-inner{grid-template-columns:1fr;text-align:center}.hero-card{display:none}.grid-3{grid-template-columns:1fr 1fr}}
+@media (max-width:620px){.grid-3{grid-template-columns:1fr}}
+.card{background:var(--card);border-radius:16px;overflow:hidden;box-shadow:var(--shadow);border:1px solid #233131;transition:transform .18s ease, box-shadow .18s ease, background .18s ease}
+.card:hover{transform:translateY(-6px);background:#192020;box-shadow:0 16px 44px rgba(0,0,0,.35)}
+.card .body{padding:20px 20px 24px}
+.card h3{margin:0 0 8px;color:#cfe9e6}
+.card p{margin:0;color:#c1cccc}
+.thumb{aspect-ratio:16/9;width:100%;object-fit:cover;display:block;cursor:zoom-in}
+
+/* ================= WHY ================= */
+.why{background:var(--teal);color:#fff}
+.why .title{color:#fff}
+.why-list{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;list-style:none;padding:0;margin:18px 0 0}
+.why-list li{position:relative;padding-left:30px;font-weight:700;letter-spacing:.2px}
+.why-list li::before{content:"";position:absolute;left:0;top:.6em;width:12px;height:12px;border-radius:50%;background:var(--blue);box-shadow:0 0 0 5px rgba(42,139,216,.22)}
+
+/* ================= Testimonials (continuous carousel) ================= */
+.testimonials .title{margin-bottom:18px}
+.carousel{position:relative;overflow:hidden}
+.track{display:flex;gap:var(--gap);flex-wrap:nowrap;will-change:transform} /* rAF animation */
+.t-card{min-width:320px;max-width:320px;background:#131717;border:1px solid #233131;border-radius:16px;padding:18px;box-shadow:var(--shadow)}
+.t-head{display:flex;align-items:center;gap:12px;margin-bottom:8px}
+.avatar{width:44px;height:44px;border-radius:50%;background:#1b2121;display:grid;place-items:center;font-weight:700;color:#dfe7e7}
+.stars{color:#ffd166;letter-spacing:2px;font-size:14px}
+.quote{color:#cbd4d4;margin-top:6px}
+.dots{display:flex;justify-content:center;gap:10px;margin-top:16px}
+.dot{width:9px;height:9px;border-radius:999px;background:#2b313d;border:1px solid #3b4352;transition:transform .15s ease, background .15s ease}
+.dot.active{background:#fff;transform:scale(1.25)}
+@media (max-width:700px){.t-card{min-width:280px;max-width:280px}}
+
+/* ================= Blog (light) ================= */
+.section-light{background:#ffffff;color:#1b1f29}
+.section-light .title{color:#0f1216}
+.section-light .muted{color:#5b616e}
+.section-light .grid .card{background:#ffffff;border:1px solid #e9eef4;box-shadow:0 8px 24px rgba(0,0,0,.06)}
+.section-light .card h3{color:#0f1216}
+.section-light .card p{color:#394150}
+.post-meta{font-size:.9rem;color:#6b7280;margin-bottom:6px}
+
+/* ================= CTA & Footer ================= */
+.cta{background:var(--bg)}
+.cta-inner{display:flex;align-items:center;justify-content:space-between;gap:20px;background:#131717;border-radius:16px;padding:26px;box-shadow:var(--shadow)}
+.cta-inner p{margin:0;font-weight:800;color:#e9f4f4}
+
+.footer-modern{background:#0b0c11;color:#cfd3da;padding-top:56px;border-top:1px solid #0f1117}
+.footer-modern a{color:#cfd3da}.footer-modern a:hover{color:#fff}
+.footer-modern svg{width:18px;height:18px;display:block;stroke:currentColor;stroke-width:1.8;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.footer-grid{display:grid;gap:40px;grid-template-columns:repeat(4,1fr)}
+.foot-title{display:flex;align-items:center;gap:10px;color:#fff;font-weight:800;text-transform:uppercase;font-size:.95rem;margin:0 0 14px}
+.foot-ico{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:6px;background:#121522;border:1px solid #1c2134;color:#8fa5ff}
+.foot-links{list-style:none;padding:0;margin:0;display:grid;gap:8px}
+.social-row{display:flex;gap:12px;margin-top:6px}
+.social{width:42px;height:42px;display:inline-grid;place-items:center;border-radius:10px;border:1px solid #1c2134;color:#e8ecff;background:#121522;transition:transform .15s,border-color .15s,box-shadow .15s,color .15s,background .15s}
+.social:hover{transform:translateY(-2px);border-color:#2a314a;box-shadow:0 8px 20px rgba(0,0,0,.25);color:#fff;background:#191e2e}
+.social.wa svg{fill:currentColor!important;stroke:none!important}
+.foot-divider{border-top:1px solid #141829;margin:28px 0}
+.foot-subrow{display:flex;align-items:center;justify-content:space-between;gap:18px;color:#9aa1b3;font-size:.95rem}
+.foot-bottom{background:#090a0f}
+.bottom-inner{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:18px 0}
+.bottom-logo{height:36px}
+.btn-gradient{background:linear-gradient(90deg, var(--blue), #6aa6ff, var(--teal));color:#fff;padding:10px 22px;border-radius:999px;font-weight:700;display:inline-block;box-shadow:0 8px 24px rgba(21,77,95,.35)}
+.btn-gradient:hover{filter:brightness(1.06)}
+
+/* Back to Top */
+#backToTop{
+  position:fixed; right:18px; bottom:18px; z-index:1100;
+  width:48px; height:48px; border-radius:999px; display:grid; place-items:center; background:var(--blue); color:#fff;
+  box-shadow:0 10px 24px rgba(0,0,0,.35); opacity:0; pointer-events:none; transform:translateY(10px);
+  transition:opacity .2s ease, transform .2s ease, filter .15s ease;
+}
+#backToTop.show{opacity:1; pointer-events:auto; transform:none}
+#backToTop:hover{filter:brightness(1.05)}
+
+/* modal form */
+.modal{position:fixed;inset:0;display:none;place-items:center;background:rgba(0,0,0,.6);z-index:1001;padding:20px}
+.modal.open{display:grid}
+.dialog{width:min(680px,96%);background:#111414;color:#e7efef;border-radius:18px;box-shadow:0 24px 80px rgba(0,0,0,.6);overflow:hidden;border:1px solid #233131}
+.dialog-header{background:linear-gradient(135deg, var(--teal), color-mix(in srgb,var(--teal) 50%,#0b2));color:#fff;padding:18px 22px;display:flex;align-items:center;justify-content:space-between}
+.dialog-body{padding:22px}
+.form-grid{display:grid;gap:14px;grid-template-columns:1fr 1fr}
+.form-grid .full{grid-column:1 / -1}
+label{font-weight:700;font-size:.95rem;margin-bottom:6px;display:block}
+input,select,textarea{width:100%;border:1px solid #2a3636;padding:12px;border-radius:12px;font:inherit;outline:none;color:#eef6f6;background:#0f1313;transition:border .15s,box-shadow .15s}
+input:focus,select:focus,textarea:focus{border-color:var(--blue);box-shadow:0 0 0 4px rgba(42,139,216,.15)}
+textarea{min-height:110px;resize:vertical}
+.form-actions{display:flex;gap:12px;align-items:center;margin-top:8px}
+.small{font-size:.85rem;color:var(--muted)}
+
+/* responsiveness */
+@media (max-width:900px){.footer-grid{grid-template-columns:1fr 1fr}}
+@media (max-width:620px){
+  .grid-3{grid-template-columns:1fr}
+  .why-list{grid-template-columns:1fr}
+  .form-grid{grid-template-columns:1fr}
+  .foot-subrow,.bottom-inner{flex-direction:column;text-align:center}
+}
+</style>
+</head>
+<body id="top">
+
+<!-- ================== HEADER ================== -->
+<header class="site-header" id="siteHeader">
+  <div class="hdr-container">
+    <a class="brand" href="index.html" aria-label="Emtithal Home">
+      <img src="images-/logo-01.png" alt="Emtithal Logo">
+    </a>
+
+    <nav aria-label="Primary">
+      <ul class="main-menu" id="mainMenu">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+
+        <li id="menuServices">
+          <a href="services.html">Services <span class="caret">▾</span></a>
+          <div class="dropdown" id="servicesDropdown">
+            <a href="environmental.html">Environmental Consultancy</a>
+            <a href="mobile-lab.html">Mobile Lab</a>
+            <a href="pest-control.html">Pest Control</a>
+          </div>
+        </li>
+
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+
+    <a class="btn btn-primary" href="contact.html#contactForm">Get a Quote</a>
+    <button id="navToggle" class="nav-toggle" aria-expanded="false" aria-controls="mainMenu">☰</button>
+  </div>
+</header>
+
+<!-- ================== HERO ================== -->
+<section class="hero" role="banner">
+  <img class="hero-mark" src="images-/logo-01.png" alt="" loading="lazy">
+  <div class="hero-inner">
+    <div>
+      <h1>Fast, Safe &amp; Guaranteed Pest Control</h1>
+      <p class="lead">Protecting homes, businesses &amp; industries across Saudi Arabia.</p>
+      <a class="btn btn-primary" href="#" onclick="openModal();return false;">Request a Free Inspection</a>
+    </div>
+    <aside class="hero-card">
+      <img class="hero-logo" src="images-/logo-01.png" alt="Emtithal Logo" loading="lazy">
+      <p class="muted" style="margin-top:14px">
+        Licensed by NCEC (License #ELESL-2024-000425). Member of NPMA. 13+ years of integrated pest management expertise.
+      </p>
+    </aside>
+  </div>
+</section>
+
+<!-- ================== SERVICES ================== -->
+<section class="section" id="services">
+  <div class="container">
+    <h2 class="title">Our Services</h2>
+    <p class="muted" style="margin-bottom:26px">Standardised measures of pest control with a proven track record.</p>
+
+    <div class="grid grid-3">
+      <article class="card">
+        <img class="thumb" src="images-/service-1.jpg" alt="Residential pest control treatment" loading="lazy">
+        <div class="body">
+          <h3>Residential Pest Control</h3>
+          <p>Proven IPM for cockroaches, ants, termites, and rodents—safe for children &amp; pets.</p>
+        </div>
+      </article>
+      <article class="card">
+        <img class="thumb" src="images-/service-2.jpg" alt="Commercial pest control in a restaurant kitchen" loading="lazy">
+        <div class="body">
+          <h3>Commercial Pest Control</h3>
+          <p>Discreet, effective protection for offices, restaurants, hotels, and retail spaces.</p>
+        </div>
+      </article>
+      <article class="card">
+        <img class="thumb" src="images-/service-3.jpg" alt="Industrial fumigation at a warehouse" loading="lazy">
+        <div class="body">
+          <h3>Industrial &amp; Fumigation</h3>
+          <p>Specialized treatments for factories &amp; warehouses—compliant with Saudi regulations.</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ================== WHY ================== -->
+<section class="section why" id="about">
+  <div class="container">
+    <h2 class="title">Why Choose Emtithal?</h2>
+    <ul class="why-list">
+      <li>Licensed by NCEC (License #ELESL-2024-000425)</li>
+      <li>13+ years of expertise in IPM</li>
+      <li>Rapid, same-day response</li>
+      <li>Child &amp; pet-safe methods</li>
+      <li>Member of the National Pest Management Association</li>
+      <li>Consultancy, monitoring &amp; prevention programs</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ================== ENVIRONMENTAL ================== -->
+<section class="section" id="environmental">
+  <div class="container">
+    <h2 class="title">Environmental Services</h2>
+    <p class="muted" style="margin-bottom:22px">Emtithal Environmental Consulting — mobile lab, compliance &amp; monitoring.</p>
+
+    <div class="grid grid-3">
+      <article class="card">
+        <img class="thumb" src="images-/bg-5.jpg" alt="Mobile air quality monitoring station" loading="lazy">
+        <div class="body">
+          <h3>Mobile Air Quality Monitoring</h3>
+          <p>PM, CO, NO₂, O₃, SO₂ &amp; H₂S measurements with calibrated equipment.</p>
+        </div>
+      </article>
+      <article class="card">
+        <img class="thumb" src="images-/bg-6.jpg" alt="Environmental impact assessment paperwork" loading="lazy">
+        <div class="body">
+          <h3>Environmental Impact &amp; Audits</h3>
+          <p>EIA, monitoring programs, and compliance with Saudi regulations.</p>
+        </div>
+      </article>
+      <article class="card">
+        <img class="thumb" src="images-/bg-4.jpg" alt="Industrial waste management and supervision" loading="lazy">
+        <div class="body">
+          <h3>Waste &amp; Site Rehabilitation</h3>
+          <p>Planning, disposal oversight, and remediation strategies for industry.</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ================== TESTIMONIALS ================== -->
+<section class="section testimonials">
+  <div class="container">
+    <h2 class="title">What Clients Say</h2>
+    <div class="carousel" id="tCarousel" aria-label="Testimonials carousel (smooth loop, pause on hover)">
+      <div class="track">
+        <div class="t-card"><div class="t-head"><div class="avatar">AA</div><div><strong>Amal A.</strong><div class="stars">★★★★★</div></div></div><p class="quote">Same-day visit, and our cockroach issue was gone. Professional, polite, and tidy.</p></div>
+        <div class="t-card"><div class="t-head"><div class="avatar">MK</div><div><strong>Mohammed K.</strong><div class="stars">★★★★★</div></div></div><p class="quote">Their IPM documentation helped our restaurant pass audit smoothly.</p></div>
+        <div class="t-card"><div class="t-head"><div class="avatar">RS</div><div><strong>Rana S.</strong><div class="stars">★★★★★</div></div></div><p class="quote">Fast response for a rodent issue in our warehouse. Clear plan & follow-up.</p></div>
+        <div class="t-card"><div class="t-head"><div class="avatar">FH</div><div><strong>Fahad H.</strong><div class="stars">★★★★★</div></div></div><p class="quote">Discreet monthly service keeps our hotel pest-free without disrupting guests.</p></div>
+        <div class="t-card"><div class="t-head"><div class="avatar">NS</div><div><strong>Noura S.</strong><div class="stars">★★★★★</div></div></div><p class="quote">They explained every step and used pet-safe products in our villa.</p></div>
+        <div class="t-card"><div class="t-head"><div class="avatar">AB</div><div><strong>Abdul B.</strong><div class="stars">★★★★★</div></div></div><p class="quote">Termite treatment was thorough. The team sealed all entry points.</p></div>
+        <div class="t-card"><div class="t-head"><div class="avatar">LK</div><div><strong>Lina K.</strong><div class="stars">★★★★★</div></div></div><p class="quote">Great communication, on-time visits, and clear reporting each month.</p></div>
+        <div class="t-card"><div class="t-head"><div class="avatar">YS</div><div><strong>Yousef S.</strong><div class="stars">★★★★★</div></div></div><p class="quote">Industrial fumigation handled professionally with all safety procedures.</p></div>
+      </div>
+      <div class="dots" aria-label="Carousel pagination"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================== BLOG ================== -->
+<section class="section section-light" id="blog">
+  <div class="container">
+    <h2 class="title">From the Blog</h2>
+    <p class="muted" style="margin-bottom:26px">Guides and tips to keep your spaces pest-free.</p>
+    <div class="grid grid-3">
+      <article class="card">
+        <img class="thumb" src="images-/blog--1.jpg" alt="Preventing summer pests" loading="lazy">
+        <div class="body">
+          <div class="post-meta">August 2025 · 4 min read</div>
+          <h3><a href="#">5 Quick Wins to Prevent Summer Pests</a></h3>
+          <p>Simple steps to reduce food, water, and shelter that attract common invaders.</p>
+        </div>
+      </article>
+      <article class="card">
+        <img class="thumb" src="images-/blog--2.jpg" alt="Restaurant IPM checklist" loading="lazy">
+        <div class="body">
+          <div class="post-meta">July 2025 · 6 min read</div>
+          <h3><a href="#">Restaurant IPM Checklist (Audit-Ready)</a></h3>
+          <p>Documentation, monitoring devices, and sanitation practices that pass inspections.</p>
+        </div>
+      </article>
+      <article class="card">
+        <img class="thumb" src="images-/blog--3.jpg" alt="Termite signs and treatment" loading="lazy">
+        <div class="body">
+          <div class="post-meta">June 2025 · 5 min read</div>
+          <h3><a href="#">Termite Warning Signs &amp; First Steps</a></h3>
+          <p>Spot trouble early and understand treatment options that protect your property.</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ================== CTA ================== -->
+<section class="section cta">
+  <div class="container cta-inner">
+    <p>Got pests today? We’re on the way.</p>
+    <a class="btn btn-dark" href="#" onclick="openModal();return false;">Request a Free Inspection</a>
+  </div>
+</section>
+
+<!-- ================== FOOTER ================== -->
+<footer class="footer-modern" id="contact">
+  <div class="container footer-grid">
+    <div class="foot-col">
+      <h4 class="foot-title"><span class="foot-ico">
+        <svg viewBox="0 0 24 24"><path d="M14 3H7a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V9l-6-6z"/><path d="M14 3v6h6"/></svg>
+      </span>Content</h4>
+      <ul class="foot-links">
+        <li><a href="services.html">Popular Services</a></li>
+        <li><a href="environmental.html">Mobile Lab</a></li>
+        <li><a href="blog.html">Pest Guides</a></li>
+        <li><a href="blog.html">News &amp; Articles</a></li>
+        <li><a href="#">Before &amp; After</a></li>
+      </ul>
+    </div>
+
+    <div class="foot-col">
+      <h4 class="foot-title"><span class="foot-ico">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 8h.01"/></svg>
+      </span>Information</h4>
+      <ul class="foot-links">
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="services.html">Our Services</a></li>
+        <li><a href="#" onclick="openModal();return false;">Request Service</a></li>
+        <li><a href="contact.html">Service Areas</a></li>
+        <li><a href="projects.html">Projects</a></li>
+      </ul>
+    </div>
+
+    <div class="foot-col">
+      <h4 class="foot-title"><span class="foot-ico">
+        <svg viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v16H6.5A2.5 2.5 0 0 0 4 21V5.5z"/><path d="M6.5 3v16M12 7h6M12 11h6M12 15h6"/></svg>
+      </span>Support &amp; Legal</h4>
+      <ul class="foot-links">
+        <li><a href="terms.html">Terms &amp; Conditions</a></li>
+        <li><a href="privacy.html">Privacy Policy</a></li>
+        <li><a href="#">Copyright Info</a></li>
+        <li><a href="#">Cookies Policy</a></li>
+        <li><a href="contact.html">Client Support</a></li>
+      </ul>
+    </div>
+
+    <div class="foot-col">
+      <h4 class="foot-title"><span class="foot-ico">
+        <svg viewBox="0 0 24 24"><path d="M4 6h16v10H8l-4 4V6z"/></svg>
+      </span>Connect with us</h4>
+      <div class="social-row">
+        <a class="social" href="#" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M9 22v-9H7V9h2V7.5A4 4 0 0 1 13 3h3v3h-3a1 1 0 0 0-1 1V9h4v4h-4v9"/></svg></a>
+        <a class="social" href="#" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="4"/><circle cx="12" cy="12" r="3.5"/><circle cx="17.2" cy="6.8" r="1"/></svg></a>
+        <a class="social" href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="2.5"/><circle cx="8" cy="10" r="1.2" style="fill:currentColor;stroke:none"/><path d="M7.2 11.8V17M11 11.8V17M11 13.6c.2-.9 1-1.8 2.3-1.8 1.6 0 2.5 1.1 2.5 2.8V17"/></svg></a>
+        <a class="social wa" href="https://wa.me/966559906886" target="_blank" rel="noopener" aria-label="WhatsApp">
+          <svg viewBox="0 0 32 32" aria-hidden="true">
+            <path d="M19.11 17.35c-.26-.13-1.52-.75-1.76-.84-.24-.09-.41-.13-.58.13-.17.26-.66.84-.81 1.02-.15.17-.3.2-.56.07-.26-.13-1.09-.4-2.09-1.27-.77-.68-1.29-1.52-1.44-1.77-.15-.26-.02-.4.11-.53.11-.11.26-.3.39-.45.13-.15.17-.26.26-.43.09-.17.04-.32-.02-.45-.06-.13-.58-1.4-.8-1.92-.21-.5-.42-.43-.58-.44h-.5c-.17 0-.45.06-.69.32-.24.26-.9.88-.9 2.15s.92 2.5 1.05 2.67c.13.17 1.81 2.77 4.38 3.88.61.26 1.09.41 1.47.53.62.2 1.19.17 1.64.1.5-.07 1.52-.62 1.74-1.22.22-.6.22-1.1.15-1.21-.06-.11-.24-.17-.5-.3zM16 3.2a12.8 12.8 0 0 0-10.9 19.4L3 29l6.55-1.99A12.79 12.79 0 1 0 16 3.2Zm0 23.16c-2.01 0-3.88-.54-5.49-1.48l-.39-.23-3.27.99.99-3.19-.25-.41a10.6 10.6 0 1 1 8.41 4.32z"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="container foot-divider"></div>
+
+  <div class="container foot-subrow">
+    <div class="sub-left">Emtithal Environmental Consulting Projects.</div>
+    <div class="sub-right">
+      <a href="services.html">Pest Control</a>
+      <a href="environmental.html">Environmental</a>
+      <a href="services.html">Fumigation</a>
+      <a href="services.html">IPM</a>
+    </div>
+  </div>
+
+  <div class="foot-bottom">
+    <div class="container bottom-inner">
+      <div class="bottom-left"><img src="images-/logo-01.png" alt="Emtithal Logo" class="bottom-logo" loading="lazy"></div>
+      <div class="bottom-center">
+        &copy; 2025 Emtithal Pest Control. All rights reserved. &nbsp;·&nbsp;
+        Developed by <a href="mailto:ismailderia123@gmail.com">Ismail Deria</a>
+      </div>
+      <div class="bottom-right">
+        <a class="btn-gradient" href="#" onclick="openModal();return false;">Get Started</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Back to Top -->
+<a id="backToTop" href="#top" aria-label="Back to top">
+  <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M18 15l-6-6-6 6"/><path d="M12 9v12"/>
+  </svg>
+</a>
+
+<!-- Modal (Form) -->
+<div class="modal" id="quoteModal" aria-hidden="true" role="dialog" aria-labelledby="quoteTitle">
+  <div class="dialog" role="document">
+    <div class="dialog-header">
+      <h3 id="quoteTitle" style="margin:0">Request a Free Inspection</h3>
+    </div>
+    <div class="dialog-body">
+      <form id="quoteForm">
+        <div class="form-grid">
+          <div><label for="name">Full Name</label><input id="name" name="name" type="text" required placeholder="Your name"></div>
+          <div><label for="phone">Phone / WhatsApp</label><input id="phone" name="phone" type="tel" required placeholder="+966 …"></div>
+          <div><label for="area">City / Area</label><input id="area" name="area" type="text" required placeholder="Riyadh, King Abdullah Road"></div>
+          <div><label for="property">Property Type</label>
+            <select id="property" name="property" required>
+              <option value="">Select…</option><option>Villa / Apartment</option><option>Office</option><option>Restaurant / Hotel</option><option>Warehouse / Industrial</option>
+            </select></div>
+          <div><label for="pest">Pest Type</label>
+            <select id="pest" name="pest" required>
+              <option value="">Select…</option><option>Cockroaches</option><option>Ants</option><option>Termites</option><option>Rodents</option><option>Bed Bugs</option><option>Mosquitoes / Flies</option><option>Fumigation (General)</option>
+            </select></div>
+          <div><label for="urgency">Urgency</label>
+            <select id="urgency" name="urgency" required>
+              <option>Today</option><option>Within 48 hours</option><option>This week</option>
+            </select></div>
+          <div class="full"><label for="message">Notes</label><textarea id="message" name="message" placeholder="Describe the issue, best time to visit, etc."></textarea></div>
+        </div>
+        <div class="form-actions"><button type="submit" class="btn btn-primary">Send Request</button><span class="small">We’ll get back to you shortly.</span></div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Lightbox -->
+<div id="lightbox" aria-hidden="true" style="position:fixed;inset:0;background:rgba(0,0,0,.8);display:none;place-items:center;z-index:1200"></div>
+
+<script>
+/* Header shrink & style switch */
+const hdr=document.getElementById('siteHeader');
+addEventListener('scroll',()=>hdr.classList.toggle('scrolled', scrollY>10),{passive:true});
+
+/* Mobile nav toggle */
+const navToggle=document.getElementById('navToggle');
+const mainMenu=document.getElementById('mainMenu');
+navToggle?.addEventListener('click',()=>{
+  const open=mainMenu.classList.toggle('open');
+  navToggle.setAttribute('aria-expanded',open);
+});
+
+/* Mobile dropdown tap + small grace period */
+const menuServices=document.getElementById('menuServices');
+if(menuServices){
+  let hideTimer;
+  const HIDE_AFTER=700;
+  const link=menuServices.querySelector('a');
+  link.addEventListener('click',e=>{
+    if(innerWidth<=760){ e.preventDefault(); menuServices.classList.toggle('open-dd'); }
+  });
+  menuServices.addEventListener('pointerenter',()=>clearTimeout(hideTimer));
+  menuServices.addEventListener('pointerleave',()=>hideTimer=setTimeout(()=>menuServices.classList.remove('open-dd'),HIDE_AFTER));
+  document.addEventListener('click',e=>{
+    if(innerWidth<=760 && !menuServices.contains(e.target)) menuServices.classList.remove('open-dd');
+  },{passive:true});
+}
+
+/* Desktop hover-intent delay for dropdowns */
+let ddWired=false;
+function wireDropdownTimers(){
+  if(innerWidth<=760){ unwireDropdownTimers(); return; }
+  if(ddWired) return;
+  const items=[...document.querySelectorAll('.main-menu > li')];
+  items.forEach(li=>{
+    const dd=li.querySelector('.dropdown'); if(!dd) return;
+    let t;
+    const show=()=>{ clearTimeout(t); dd.classList.add('js-open'); };
+    const hide=()=>{ t=setTimeout(()=>dd.classList.remove('js-open'), 250); };
+    li.__ddShow=show; li.__ddHide=hide;
+    li.addEventListener('mouseenter', show);
+    li.addEventListener('mouseleave', hide);
+    dd.addEventListener('mouseenter', show);
+    dd.addEventListener('mouseleave', hide);
+  });
+  ddWired=true;
+}
+function unwireDropdownTimers(){
+  const items=[...document.querySelectorAll('.main-menu > li')];
+  items.forEach(li=>{
+    const dd=li.querySelector('.dropdown'); if(!dd) return;
+    if(li.__ddShow){ li.removeEventListener('mouseenter', li.__ddShow); dd.removeEventListener('mouseenter', li.__ddShow); }
+    if(li.__ddHide){ li.removeEventListener('mouseleave', li.__ddHide); dd.removeEventListener('mouseleave', li.__ddHide); }
+    dd.classList.remove('js-open'); li.__ddShow=null; li.__ddHide=null;
+  });
+  ddWired=false;
+}
+addEventListener('load', wireDropdownTimers);
+addEventListener('resize', ()=>{ setTimeout(()=>{ unwireDropdownTimers(); wireDropdownTimers(); }, 150); }, {passive:true});
+
+/* Reveal on scroll */
+const io=new IntersectionObserver((ents,obs)=>{
+  ents.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); obs.unobserve(e.target); } });
+},{threshold:.15});
+document.querySelectorAll('.title, .lead, .card, .cta-inner').forEach(el=>{
+  el.classList.add('reveal'); io.observe(el);
+});
+
+/* Back to Top */
+const back=document.getElementById('backToTop');
+const showAfter=450;
+addEventListener('scroll',()=>{ if(scrollY>showAfter) back.classList.add('show'); else back.classList.remove('show'); },{passive:true});
+
+/* Modal */
+const modal=document.getElementById('quoteModal');
+function openModal(){ modal.classList.add('open'); modal.setAttribute('aria-hidden','false'); }
+function closeModal(){ modal.classList.remove('open'); modal.setAttribute('aria-hidden','true'); }
+modal.addEventListener('click',e=>{ if(e.target===modal) closeModal(); });
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeModal(); });
+
+/* Phone mask (+966) */
+const phone=document.getElementById('phone');
+if(phone){
+  phone.addEventListener('input',e=>{
+    let v=e.target.value.replace(/\D+/g,'');
+    if(v.startsWith('966')) v='+'+v; else if(v.startsWith('0')) v='+966'+v.slice(1);
+    if(!v.startsWith('+966')) v='+966'+v;
+    e.target.value=v.replace(/^\+966(\d{0,3})(\d{0,3})(\d{0,4}).*$/,
+      (m,a,b,c)=>['+966',a&&' '+a,b&&' '+b,c&&' '+c].filter(Boolean).join(''));
+  });
+}
+
+/* Form submit */
+function isMobile(){ return /Android|iPhone|iPad|iPod/i.test(navigator.userAgent); }
+document.getElementById('quoteForm').addEventListener('submit',function(e){
+  e.preventDefault();
+  const d=Object.fromEntries(new FormData(this).entries());
+  const msg=`Free Inspection Request:
+Name: ${d.name}
+Phone: ${d.phone}
+Area: ${d.area}
+Property: ${d.property}
+Pest: ${d.pest}
+Urgency: ${d.urgency}
+Notes: ${d.message||''}`;
+  if(isMobile()){
+    window.open(`https://wa.me/966559906886?text=${encodeURIComponent(msg)}`,'_blank');
+  }else{
+    const subject=encodeURIComponent('Free Inspection Request');
+    const body=encodeURIComponent(msg);
+    window.location.href=`mailto:info@emtithaal.com?subject=${subject}&body=${body}`;
+  }
+  setTimeout(()=>closeModal(),300);
+});
+
+/* Testimonials carousel: seamless continuous loop, pause on hover */
+(function(){
+  const wrap=document.getElementById('tCarousel'); if(!wrap) return;
+  const track=wrap.querySelector('.track'); const dotsWrap=wrap.querySelector('.dots');
+  const originals=Array.from(track.children);
+  originals.forEach(s=>track.appendChild(s.cloneNode(true))); // duplicate once
+  let slideW=0,setW=0,x=0,paused=false,last; const SPEED=0.12;
+
+  dotsWrap.innerHTML='';
+  originals.forEach((_,i)=>{
+    const b=document.createElement('button'); b.className='dot'; b.type='button';
+    b.setAttribute('aria-label',`Go to testimonial ${i+1}`);
+    b.addEventListener('click',()=>{ x=-i*slideW; track.style.transform=`translateX(${x}px)`; syncDots(); });
+    dotsWrap.appendChild(b);
+  });
+
+  function measure(){
+    const first=originals[0].getBoundingClientRect();
+    const second=originals[1] ? originals[1].getBoundingClientRect() : { left:first.right };
+    const gap=Math.max(second.left-first.right,0);
+    slideW=first.width+gap; setW=slideW*originals.length;
+  }
+  function syncDots(){
+    const i=Math.floor(Math.abs(x)/slideW)%originals.length;
+    [...dotsWrap.children].forEach((d,idx)=>d.classList.toggle('active', idx===i));
+  }
+  function tick(now){
+    if(last==null) last=now; const dt=now-last; last=now;
+    if(!paused){ x-=SPEED*dt; if(x<=-setW) x+=setW; track.style.transform=`translateX(${x}px)`; syncDots(); }
+    requestAnimationFrame(tick);
+  }
+  measure(); syncDots(); requestAnimationFrame(tick);
+  wrap.addEventListener('mouseenter',()=>paused=true);
+  wrap.addEventListener('mouseleave',()=>paused=false);
+  addEventListener('resize',()=>{ const i=Math.floor(Math.abs(x)/slideW)%originals.length; measure(); x=-i*slideW; track.style.transform=`translateX(${x}px)`; syncDots(); },{passive:true});
+})();
+
+/* Lightbox */
+const lb=document.getElementById('lightbox');
+if(lb){
+  document.querySelectorAll('.thumb').forEach(img=>{
+    img.addEventListener('click',()=>{
+      lb.innerHTML=''; const big=new Image(); big.src=img.src; big.alt=img.alt||''; big.style.maxWidth='min(92vw,1100px)'; big.style.maxHeight='86vh'; big.style.borderRadius='12px'; big.style.boxShadow='0 20px 60px rgba(0,0,0,.6)';
+      lb.appendChild(big); lb.style.display='grid';
+    });
+  });
+  lb.addEventListener('click',()=>{ lb.style.display='none'; lb.innerHTML=''; });
+  addEventListener('keydown',e=>{ if(e.key==='Escape') lb.click(); });
+}
+</script>
+</body>
+</html>
