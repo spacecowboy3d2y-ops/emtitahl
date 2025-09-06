@@ -4,6 +4,8 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Contact | Emtithal Pest Control</title>
+
+<!-- Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Cairo:wght@400;700&display=swap" rel="stylesheet">
 
 <style>
@@ -30,7 +32,7 @@ a{text-decoration:none;color:inherit}
 .btn{display:inline-block;padding:13px 22px;border-radius:999px;font-weight:700;box-shadow:0 10px 24px rgba(0,0,0,.35)}
 .btn-primary{background:var(--blue);color:#fff}
 
-/* ================= HEADER (same as index) ================= */
+/* ================= HEADER ================= */
 .hdr-container{
   width:min(1160px,92%);margin-inline:auto;
   display:flex;align-items:center;justify-content:space-between;gap:18px
@@ -45,8 +47,8 @@ a{text-decoration:none;color:inherit}
 .main-menu{list-style:none;margin:0;padding:0;display:flex;gap:24px;align-items:center}
 .main-menu>li{position:relative}
 .main-menu a{color:inherit;font-weight:700;display:inline-block;padding:8px 12px;border-radius:10px;line-height:1}
-.site-header:not(.scrolled) .main-menu a:hover{background:var(--teal);color:#fff}        /* normal */
-.site-header.scrolled .main-menu a:hover{background:#fff;color:var(--teal);outline:1px solid color-mix(in srgb,var(--teal) 70%,transparent)} /* sticky */
+.site-header:not(.scrolled) .main-menu a:hover{background:var(--teal);color:#fff}
+.site-header.scrolled .main-menu a:hover{background:#fff;color:var(--teal);outline:1px solid color-mix(in srgb,var(--teal) 70%,transparent)}
 .caret{margin-left:6px;display:inline-block;transform:translateY(-1px)}
 
 /* dropdown (white) */
@@ -95,6 +97,7 @@ a{text-decoration:none;color:inherit}
 label{font-weight:700;font-size:.95rem;margin-bottom:6px;display:block}
 input,select,textarea{width:100%;border:1px solid #2a3636;padding:12px;border-radius:12px;font:inherit;background:#0f1313;color:#eef6f6}
 input:focus,select:focus,textarea:focus{border-color:var(--blue);box-shadow:0 0 0 4px rgba(42,139,216,.15)}
+input[required]:user-invalid, textarea[required]:user-invalid {border-color:#e66}
 textarea{min-height:120px;resize:vertical}
 .info-img{border-radius:16px;overflow:hidden;border:1px solid #233131}
 .quick{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:var(--gap);margin-top:24px}
@@ -118,7 +121,26 @@ textarea{min-height:120px;resize:vertical}
 .logo-item img:hover{filter:none;opacity:1;transform:translateY(-2px)}
 @keyframes marquee{from{transform:translateX(0)}to{transform:translateX(calc(-1 * var(--loopW,1000px)))}}
 
-/* ================= Old black footer ================= */
+/* ================= MAP ================= */
+.map-wrap{
+  border-radius:14px;
+  overflow:hidden;
+  border:1px solid #233131;
+  box-shadow: var(--shadow);
+}
+.map-wrap iframe{
+  width:100%;
+  height:420px;
+  display:block;
+  border:0;
+}
+@media (max-width:620px){
+  .grid{grid-template-columns:1fr}
+  .faq-grid{grid-template-columns:1fr}
+  .map-wrap iframe{ height:320px; }
+}
+
+/* ================= Footer ================= */
 .footer-modern{background:#0b0c11;color:#cfd3da;border-top:1px solid #0f1117}
 .footer-modern a{color:#cfd3da}.footer-modern a:hover{color:#fff}
 .footer-grid{display:grid;gap:40px;grid-template-columns:repeat(3,1fr);padding:56px 0}
@@ -132,12 +154,7 @@ textarea{min-height:120px;resize:vertical}
 .foot-bottom{background:#090a0f}
 .bottom-inner{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:18px 0}
 @media (max-width:900px){.footer-grid{grid-template-columns:1fr 1fr}}
-@media (max-width:620px){
-  .grid{grid-template-columns:1fr}
-  .faq-grid{grid-template-columns:1fr}
-  .footer-grid{grid-template-columns:1fr}
-  .bottom-inner{flex-direction:column;text-align:center}
-}
+@media (max-width:620px){.footer-grid{grid-template-columns:1fr}.bottom-inner{flex-direction:column;text-align:center}}
 
 /* WhatsApp FAB */
 .fab-wrap{position:fixed;right:18px;bottom:18px;z-index:1100}
@@ -169,12 +186,12 @@ textarea{min-height:120px;resize:vertical}
         </li>
 
         <li><a href="blog.html">Blog</a></li>
-        <li><a href="contact.html">Contact</a></li>
+        <li aria-current="page"><a href="contact.html">Contact</a></li>
       </ul>
     </nav>
 
     <a class="btn btn-primary" href="#contactForm">Get a Quote</a>
-    <button id="navToggle" class="nav-toggle" aria-expanded="false" aria-controls="mainMenu">☰</button>
+    <button id="navToggle" class="nav-toggle" aria-expanded="false" aria-controls="mainMenu" aria-label="Toggle Navigation">☰</button>
   </div>
 </header>
 
@@ -191,44 +208,63 @@ textarea{min-height:120px;resize:vertical}
 </section>
 
 <!-- ================= Contact form + info ================= -->
-<section class="section">
+<section class="section" aria-labelledby="contact-title">
   <div class="container">
     <div class="grid">
       <div>
-        <h2 class="title">We’d love to hear from you.</h2>
+        <h2 class="title" id="contact-title">We’d love to hear from you.</h2>
         <p class="muted" style="margin-bottom:14px">Use the form below—our team will respond quickly.</p>
 
         <div id="contactForm" class="form-card">
-          <form id="pageForm">
+          <form id="pageForm" novalidate>
             <div class="form-grid">
-              <div><label for="name">Full Name</label><input id="name" name="name" required placeholder="Your name"></div>
-              <div><label for="phone">Phone / WhatsApp</label><input id="phone" name="phone" required placeholder="+966 …"></div>
-              <div><label for="email">Email</label><input id="email" type="email" name="email" placeholder="you@example.com"></div>
-              <div><label for="city">City / Area</label><input id="city" name="city" placeholder="Riyadh, King Abdullah Road"></div>
-              <div class="full"><label for="subject">Subject</label><input id="subject" name="subject" placeholder="How can we help?"></div>
-              <div class="full"><label for="message">Message</label><textarea id="message" name="message" placeholder="Describe the issue, best time to visit, etc."></textarea></div>
+              <div>
+                <label for="name">Full Name *</label>
+                <input id="name" name="name" required placeholder="Your name" autocomplete="name" />
+              </div>
+              <div>
+                <label for="phone">Phone / WhatsApp *</label>
+                <input id="phone" name="phone" required placeholder="+966 …" inputmode="tel" />
+              </div>
+              <div>
+                <label for="email">Email</label>
+                <input id="email" type="email" name="email" placeholder="you@example.com" autocomplete="email" />
+              </div>
+              <div>
+                <label for="city">City / Area</label>
+                <input id="city" name="city" placeholder="Riyadh, King Abdullah Road" />
+              </div>
+              <div class="full">
+                <label for="subject">Subject</label>
+                <input id="subject" name="subject" placeholder="How can we help?" />
+              </div>
+              <div class="full">
+                <label for="message">Message *</label>
+                <textarea id="message" name="message" placeholder="Describe the issue, best time to visit, etc." required></textarea>
+              </div>
             </div>
-            <div style="margin-top:10px;display:flex;gap:10px;align-items:center">
+            <div style="margin-top:10px;display:flex;gap:10px;align-items:center;flex-wrap:wrap">
               <button class="btn btn-primary" type="submit">Send Request</button>
               <a class="btn" style="background:#0f3c3a;color:#fff" href="https://wa.me/966559906886" target="_blank" rel="noopener">Chat on WhatsApp</a>
             </div>
+            <p class="muted" style="margin-top:8px;font-size:.9rem">Fields marked with * are required.</p>
           </form>
         </div>
       </div>
 
-      <aside>
-        <div class="info-img"><img src="images-/service-4.jpg" alt="Emtithal team"></div>
+      <aside aria-label="Company contact details">
+        <div class="info-img"><img src="images-/service-4.jpg" alt="Emtithal team at work"></div>
 
-        <div class="quick">
-          <div class="q-box">
+        <div class="quick" role="list">
+          <div class="q-box" role="listitem">
             <div class="k">Phone</div>
             <div class="v">+966&nbsp;55&nbsp;990&nbsp;6886</div>
           </div>
-          <div class="q-box">
+          <div class="q-box" role="listitem">
             <div class="k">Email</div>
             <div class="v"><a href="mailto:info@emtithaal.com">info@emtithaal.com</a></div>
           </div>
-          <div class="q-box">
+          <div class="q-box" role="listitem">
             <div class="k">Location</div>
             <div class="v">Riyadh, Saudi Arabia</div>
           </div>
@@ -239,9 +275,9 @@ textarea{min-height:120px;resize:vertical}
 </section>
 
 <!-- ================= FAQ ================= -->
-<section class="section">
+<section class="section" aria-labelledby="faq-title">
   <div class="container">
-    <h2 class="title">Frequently Asked Questions</h2>
+    <h2 class="title" id="faq-title">Frequently Asked Questions</h2>
     <p class="muted" style="margin-bottom:16px">Common questions about our pest control services.</p>
     <div class="faq-grid">
       <div class="faq"><h4>How long does pest control take?</h4><p>Most visits take 30–90 minutes depending on the pest and property size.</p></div>
@@ -252,10 +288,10 @@ textarea{min-height:120px;resize:vertical}
   </div>
 </section>
 
-<!-- ================= Clients (20% each, seamless loop) ================= -->
-<section class="section clients">
+<!-- ================= Clients (marquee) ================= -->
+<section class="section clients" aria-labelledby="clients-title">
   <div class="container">
-    <h2 class="title">Our Clients</h2>
+    <h2 class="title" id="clients-title">Our Clients</h2>
     <div class="logo-slider" id="clientSlider" aria-label="Client logos slider">
       <div class="logo-track">
         <div class="logo-item"><img src="images-/al-ojaimi.jpg" alt="Al Ojaimi"></div>
@@ -268,10 +304,36 @@ textarea{min-height:120px;resize:vertical}
   </div>
 </section>
 
-<!-- ================= FOOTER (old black) ================= -->
+<!-- ================= MAP (added) ================= -->
+<section class="section" id="map" aria-labelledby="map-title">
+  <div class="container">
+    <h2 class="title" id="map-title">Find Us</h2>
+    <p class="muted" style="margin-bottom:14px">
+      Riyadh, King Abdullah Road — Saudi Arabia
+    </p>
+
+    <div class="map-wrap" role="region" aria-label="Map to our office">
+      <iframe
+        title="Emtithal Location – Riyadh"
+        src="https://www.google.com/maps?q=Riyadh%20King%20Abdullah%20Road&z=14&output=embed"
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        allowfullscreen>
+      </iframe>
+    </div>
+
+    <div style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap">
+      <a class="btn btn-primary" target="_blank" rel="noopener"
+         href="https://www.google.com/maps?q=Riyadh%20King%20Abdullah%20Road">Open in Google Maps</a>
+      <a class="btn" style="background:#0f3c3a;color:#fff" target="_blank" rel="noopener"
+         href="https://www.google.com/maps/dir//Riyadh%20King%20Abdullah%20Road">Get Directions</a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
 <footer class="footer-modern">
   <div class="container footer-grid">
-    <!-- Col 1 -->
     <div>
       <img class="bottom-logo" src="images-/logo-01.png" alt="Emtithal" />
       <ul class="foot-links" style="margin-top:14px">
@@ -292,7 +354,6 @@ textarea{min-height:120px;resize:vertical}
       </div>
     </div>
 
-    <!-- Col 2 -->
     <div>
       <h4 class="foot-title">Quick Links</h4>
       <ul class="foot-links">
@@ -305,7 +366,6 @@ textarea{min-height:120px;resize:vertical}
       </ul>
     </div>
 
-    <!-- Col 3 -->
     <div>
       <h4 class="foot-title">Request</h4>
       <p class="foot-text">Need a free inspection or a quote? Get in touch with our team.</p>
@@ -413,6 +473,10 @@ function isMobile(){ return /Android|iPhone|iPad|iPod/i.test(navigator.userAgent
 document.getElementById('pageForm').addEventListener('submit',function(e){
   e.preventDefault();
   const d=Object.fromEntries(new FormData(this).entries());
+  if(!d.name || !d.phone || !d.message){
+    alert('Please fill the required fields: Full Name, Phone, and Message.');
+    return;
+  }
   const msg=`Contact Request:
 Name: ${d.name||''}
 Phone: ${d.phone||''}
