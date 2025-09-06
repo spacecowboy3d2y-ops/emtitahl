@@ -26,36 +26,58 @@ a{text-decoration:none}
 .btn-primary{background:var(--blue);color:#fff}
 .btn-ghost{border:1px solid #264e6b;color:#d9ecff;background:#0e2a3b}
 
-/* Header (same as other pages) */
-.hdr-container{width:min(1160px,92%);margin-inline:auto;display:flex;align-items:center;justify-content:space-between;gap:18px}
-.site-header{position:fixed;inset:0 0 auto;z-index:1000;height:72px;display:flex;align-items:center;background:var(--hdr-dark);color:#e7f5f4;box-shadow:0 6px 20px rgba(0,0,0,.35);transition:background .2s,height .2s,box-shadow .2s}
-.site-header.scrolled{background:var(--hdr-light);color:var(--teal);height:64px;box-shadow:0 8px 24px rgba(0,0,0,.15)}
+/* ================= HEADER (new) ================= */
+.hdr-container{
+  width:min(1160px,92%);margin-inline:auto;
+  display:flex;align-items:center;justify-content:space-between;gap:18px
+}
+.site-header{
+  position:fixed; inset:0 0 auto; z-index:1000; height:72px;
+  display:flex; align-items:center; background:var(--hdr-dark); color:#e7f5f4;
+  box-shadow:0 6px 20px rgba(0,0,0,.35); transition:background .2s,height .2s,box-shadow .2s
+}
+.site-header.scrolled{
+  background:var(--hdr-light); color:var(--teal); height:64px;
+  box-shadow:0 8px 24px rgba(0,0,0,.15)
+}
 .brand img{height:52px}
-.main-menu{list-style:none;margin:0;padding:0;display:flex;gap:24px;align-items:center}
+.main-menu{list-style:none;margin:0;padding:0;display:flex;gap:24px;align-items:center;position:relative}
 .main-menu>li{position:relative}
-.main-menu a{color:inherit;text-decoration:none;font-weight:600;padding-bottom:6px;position:relative}
-.main-menu a::after{content:"";position:absolute;left:0;bottom:0;height:2px;width:0;background:var(--blue);transition:width .25s}
-.site-header:not(.scrolled) .main-menu a{color:#e7f5f4}
-.site-header.scrolled .main-menu a{color:var(--teal)}
-.main-menu a:hover::after{width:100%}
+.main-menu a{
+  color:inherit;font-weight:600;display:inline-block;
+  padding:8px 12px;border-radius:10px;line-height:1
+}
+/* Normal header hover = teal chip + white text */
+.site-header:not(.scrolled) .main-menu a:hover,
+.site-header:not(.scrolled) .main-menu a:focus-visible{
+  background:var(--teal); color:#fff;
+}
+/* Sticky header hover = white chip + teal text */
+.site-header.scrolled .main-menu a:hover,
+.site-header.scrolled .main-menu a:focus-visible{
+  background:#fff; color:var(--teal);
+  outline:1px solid color-mix(in srgb, var(--teal) 70%, transparent);
+  box-shadow:0 1px 0 rgba(0,0,0,.04)
+}
 .caret{margin-left:6px;display:inline-block;transform:translateY(-1px)}
+
+/* dropdown (white) */
 .dropdown{
-  position:absolute;top:calc(100% + 10px);left:0;min-width:260px;background:#fff;border:1px solid #e6edf1;border-radius:12px;padding:8px;
-  opacity:0;visibility:hidden;transform:translateY(8px);pointer-events:none;will-change:opacity,transform;
-  transition:opacity .18s ease var(--dd-hide-delay),transform .18s ease var(--dd-hide-delay),visibility 0s linear var(--dd-hide-delay);
-  box-shadow:0 16px 36px rgba(10,20,30,.15)
+  position:absolute; top:calc(100% + 10px); left:0; min-width:260px;
+  background:#fff; border:1px solid #fff; border-radius:12px; padding:8px;
+  opacity:0; visibility:hidden; transform:translateY(8px);
+  pointer-events:none; will-change:opacity,transform;
+  transition:
+    opacity .13s ease var(--dd-hide-delay),
+    transform .13s ease var(--dd-hide-delay),
+    visibility 0s linear var(--dd-hide-delay);
+  box-shadow:0 16px 36px rgba(10,20,30,.15); z-index:1000;
 }
 .dropdown a{display:block;padding:10px 12px;border-radius:8px;color:var(--teal)}
-.dropdown a:hover{background:#f4f7f9;color:#113332}
-.main-menu li:hover>.dropdown,.main-menu .open-dd>.dropdown,.dropdown.js-open{opacity:1;visibility:visible;transform:translateY(0);pointer-events:auto;transition-delay:0s,0s,0s}
-.nav-toggle{display:none;background:#0b2b29;color:#fff;border:0;padding:10px 14px;border-radius:10px;font-weight:700}
-.site-header.scrolled .nav-toggle{background:#eef4f4;color:var(--teal)}
-@media (max-width:760px){
-  .nav-toggle{display:inline-block}
-  .main-menu{display:none;position:absolute;top:72px;left:4%;right:4%;background:var(--hdr-dark);padding:14px;border-radius:12px;flex-direction:column;gap:12px}
-  .site-header.scrolled .main-menu{background:#fff}
-  .main-menu.open{display:flex}
-  .dropdown{position:static;transform:none}
+.dropdown a:hover{background:#1f4f4c;color:#fff}
+.main-menu li:hover>.dropdown,
+.main-menu .open-dd>.dropdown,
+.dropdown.js-open{opacity:1; visibility:visible; transform:translateY(0); pointer-events:auto; transition-delay:0s,0s,0s}
 }
 
 /* Hero */
@@ -123,20 +145,34 @@ ul.clean li{margin:6px 0}
 
 <header class="site-header" id="siteHeader">
   <div class="hdr-container">
-    <a class="brand" href="index.html"><img src="logo-04.webp" alt="Emtithal Logo"></a>
+    <a class="brand" href="index.html" aria-label="Emtithal Home">
+      <img src="logo-02.webp" alt="Emtithal Logo">
+    </a>
+
     <nav aria-label="Primary">
       <ul class="main-menu" id="mainMenu">
-        <li><a href="index.html">Home</a></li><li><a href="about.html">About</a></li>
-        <li id="menuServices"><a href="services.html">Services <span class="caret">▾</span></a>
-          <div class="dropdown"><a href="environmental.html">Environmental Consultancy</a><a href="mobile-lab.html">Mobile Lab</a><a href="pest-control.html">Pest Control</a></div>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+
+        <li id="menuServices">
+          <a href="services.html">Services <span class="caret">▾</span></a>
+          <div class="dropdown" id="servicesDropdown">
+            <a href="environmental.html">Environmental Consultancy</a>
+            <a href="mobile-lab.html">Mobile Lab</a>
+            <a href="pest-control.html">Pest Control</a>
+          </div>
         </li>
-        <li><a href="environmental.html">Environmental</a></li><li><a href="blog.html">Blog</a></li><li><a href="contact.html">Contact</a></li>
+
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="contact.html">Contact</a></li>
       </ul>
     </nav>
-    <a class="btn btn-primary" href="contact.html#contactForm">Book a Visit</a>
+
+    <a class="btn btn-primary" href="contact.html#contactForm">Get a Quote</a>
     <button id="navToggle" class="nav-toggle" aria-expanded="false" aria-controls="mainMenu">☰</button>
   </div>
 </header>
+
 
 <section class="hero">
   <div class="hero-inner">
@@ -234,4 +270,5 @@ const backBtn=document.getElementById('backToTop');function toggleTop(){backBtn.
 </script>
 </body>
 </html>
+
 
