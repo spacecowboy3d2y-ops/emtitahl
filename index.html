@@ -39,7 +39,7 @@ a{text-decoration:none}
 .btn-dark{background:#0f3c3a;color:#fff}
 .btn-dark:hover{background:#0d4f49}
 
-/* ================= HEADER (new) ================= */
+/* ================= HEADER (updated to match other pages) ================= */
 .hdr-container{
   width:min(1160px,92%);margin-inline:auto;
   display:flex;align-items:center;justify-content:space-between;gap:18px
@@ -47,19 +47,26 @@ a{text-decoration:none}
 .site-header{
   position:fixed; inset:0 0 auto; z-index:1000; height:72px;
   display:flex; align-items:center; background:var(--hdr-dark); color:#e7f5f4;
-  box-shadow:0 6px 20px rgba(0,0,0,.35); transition:background .2s,height .2s,box-shadow .2s
+  box-shadow:0 6px 20px rgba(0,0,0,.35); transition:background .2s,height .2s,box-shadow .2s,color .2s
 }
 .site-header.scrolled{
   background:var(--hdr-light); color:var(--teal); height:64px;
-  box-shadow:0 8px 24px rgba(0,0,0,.15)
+  box-shadow:0 8px 24px rgba(0,0,0,.15); border-bottom:1px solid #e6edf1
 }
 .brand img{height:52px}
+/* logo swap */
+.brand .logo-dark{display:none}
+.site-header.scrolled .brand .logo-light{display:none}
+.site-header.scrolled .brand .logo-dark{display:block}
+
 .main-menu{list-style:none;margin:0;padding:0;display:flex;gap:24px;align-items:center;position:relative}
 .main-menu>li{position:relative}
 .main-menu a{
   color:inherit;font-weight:600;display:inline-block;
   padding:8px 12px;border-radius:10px;line-height:1
 }
+/* ensure teal link color when sticky */
+.site-header.scrolled .main-menu a{color:var(--teal)}
 /* Normal header hover = teal chip + white text */
 .site-header:not(.scrolled) .main-menu a:hover,
 .site-header:not(.scrolled) .main-menu a:focus-visible{
@@ -142,7 +149,7 @@ a{text-decoration:none}
 /* ================= Testimonials (continuous carousel) ================= */
 .testimonials .title{margin-bottom:18px}
 .carousel{position:relative;overflow:hidden}
-.track{display:flex;gap:var(--gap);flex-wrap:nowrap;will-change:transform} /* rAF animation */
+.track{display:flex;gap:var(--gap);flex-wrap:nowrap;will-change:transform}
 .t-card{min-width:320px;max-width:320px;background:#131717;border:1px solid #233131;border-radius:16px;padding:18px;box-shadow:var(--shadow)}
 .t-head{display:flex;align-items:center;gap:12px;margin-bottom:8px}
 .avatar{width:44px;height:44px;border-radius:50%;background:#1b2121;display:grid;place-items:center;font-weight:700;color:#dfe7e7}
@@ -227,7 +234,10 @@ textarea{min-height:110px;resize:vertical}
 <header class="site-header" id="siteHeader">
   <div class="hdr-container">
     <a class="brand" href="index.html" aria-label="Emtithal Home">
-      <img src="logo-02.webp" alt="Emtithal Logo">
+      <!-- Light logo for dark header -->
+      <img class="logo-light" src="logo-02.webp" alt="Emtithal Logo">
+      <!-- Dark logo for white sticky header (replace with your dark variant) -->
+      <img class="logo-dark" src="logo-02-dark.webp" alt="Emtithal Logo Dark">
     </a>
 
     <nav aria-label="Primary">
@@ -430,9 +440,8 @@ textarea{min-height:110px;resize:vertical}
     </div>
 
     <div class="foot-col">
-      <h4 class="foot-title"><span class="foot-ico">
-        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 8h.01"/></svg>
-      </span>Information</h4>
+      <h4 class="foot-title"><span class="foot-ico>
+        </span>Information</h4>
       <ul class="foot-links">
         <li><a href="about.html">About Us</a></li>
         <li><a href="services.html">Our Services</a></li>
@@ -708,7 +717,3 @@ if(lb){
 </script>
 </body>
 </html>
-
-
-
-
