@@ -14,9 +14,13 @@
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{margin:0;background:var(--bg);color:var(--ink-on-dark);font-family:"Poppins","Cairo",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;line-height:1.6;padding-top:var(--header-h)}
+body{
+  margin:0;background:var(--bg);color:var(--ink-on-dark);
+  font-family:"Poppins","Cairo",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+  line-height:1.6;padding-top:var(--header-h)
+}
 img{max-width:100%;display:block}
-a{text-decoration:none}
+a{text-decoration:none;color:inherit}
 .container{width:min(1160px,92%);margin-inline:auto}
 .section{padding:84px 0}
 .title{color:#fff;margin:0 0 12px;font-size:clamp(1.7rem,2vw+1rem,2.3rem)}
@@ -26,19 +30,33 @@ a{text-decoration:none}
 .btn-primary{background:var(--blue);color:#fff}
 .btn-ghost{border:1px solid #264e6b;color:#d9ecff;background:#0e2a3b}
 
-/* Header (same as other pages) */
-.hdr-container{width:min(1160px,92%);margin-inline:auto;display:flex;align-items:center;justify-content:space-between;gap:18px}
-.site-header{position:fixed;inset:0 0 auto;z-index:1000;height:72px;display:flex;align-items:center;background:var(--hdr-dark);color:#e7f5f4;box-shadow:0 6px 20px rgba(0,0,0,.35);transition:background .2s,height .2s,box-shadow .2s}
+/* ===== Header (unified) ===== */
+.hdr-container{
+  width:min(1160px,92%);margin-inline:auto;display:flex;align-items:center;justify-content:space-between;gap:18px
+}
+.site-header{
+  position:fixed;inset:0 0 auto;z-index:1000;height:72px;display:flex;align-items:center;
+  background:var(--hdr-dark);color:#e7f5f4;box-shadow:0 6px 20px rgba(0,0,0,.35);
+  transition:background .2s,height .2s,box-shadow .2s
+}
 .site-header.scrolled{background:var(--hdr-light);color:var(--teal);height:64px;box-shadow:0 8px 24px rgba(0,0,0,.15)}
 .brand img{height:52px}
+
+/* logo swap on scroll */
+.brand .logo-scroll{display:none}
+.site-header.scrolled .brand .logo-main{display:none}
+.site-header.scrolled .brand .logo-scroll{display:inline}
+
 .main-menu{list-style:none;margin:0;padding:0;display:flex;gap:24px;align-items:center}
 .main-menu>li{position:relative}
-.main-menu a{color:inherit;text-decoration:none;font-weight:600;padding-bottom:6px;position:relative}
+.main-menu a{color:inherit;text-decoration:none;font-weight:600;padding:8px 0;position:relative}
 .main-menu a::after{content:"";position:absolute;left:0;bottom:0;height:2px;width:0;background:var(--blue);transition:width .25s}
+.main-menu a:hover::after{width:100%}
 .site-header:not(.scrolled) .main-menu a{color:#e7f5f4}
 .site-header.scrolled .main-menu a{color:var(--teal)}
-.main-menu a:hover::after{width:100%}
 .caret{margin-left:6px;display:inline-block;transform:translateY(-1px)}
+
+/* dropdown */
 .dropdown{
   position:absolute;top:calc(100% + 10px);left:0;min-width:260px;background:#fff;border:1px solid #e6edf1;border-radius:12px;padding:8px;
   opacity:0;visibility:hidden;transform:translateY(8px);pointer-events:none;will-change:opacity,transform;
@@ -48,6 +66,8 @@ a{text-decoration:none}
 .dropdown a{display:block;padding:10px 12px;border-radius:8px;color:var(--teal)}
 .dropdown a:hover{background:#f4f7f9;color:#113332}
 .main-menu li:hover>.dropdown,.main-menu .open-dd>.dropdown,.dropdown.js-open{opacity:1;visibility:visible;transform:translateY(0);pointer-events:auto;transition-delay:0s,0s,0s}
+
+/* mobile nav */
 .nav-toggle{display:none;background:#0b2b29;color:#fff;border:0;padding:10px 14px;border-radius:10px;font-weight:700}
 .site-header.scrolled .nav-toggle{background:#eef4f4;color:var(--teal)}
 @media (max-width:760px){
@@ -58,14 +78,17 @@ a{text-decoration:none}
   .dropdown{position:static;transform:none}
 }
 
-/* Hero */
-.hero{position:relative;min-height:56vh;display:grid;place-items:center;background:url('images-/bg-5.jpg') center/cover no-repeat}
+/* ===== Hero ===== */
+.hero{
+  position:relative;min-height:56vh;display:grid;place-items:center;
+  background:url('images-/bg-5.jpg') center/cover no-repeat
+}
 .hero::before{content:"";position:absolute;inset:0;background:linear-gradient(150deg, rgba(0,0,0,.55), rgba(17,30,31,.62))}
 .hero-inner{position:relative;z-index:1;text-align:center;max-width:900px;padding:0 12px}
-.hero h1{color:#000000;margin:0 0 10px;font-size:clamp(2rem,2.4vw+1rem,3rem)}
+.hero h1{color:#fff;margin:0 0 10px;font-size:clamp(2rem,2.4vw+1rem,3rem)}
 .hero p{margin:0;color:#d8ecea}
 
-/* Blocks */
+/* ===== Blocks ===== */
 .grid{display:grid;gap:var(--gap)}
 .grid-2{grid-template-columns:1.05fr .95fr;align-items:center}
 @media (max-width:980px){.grid-2{grid-template-columns:1fr}}
@@ -77,7 +100,7 @@ a{text-decoration:none}
 ul.clean{margin:10px 0 0 18px;color:#c9d4d3}
 ul.clean li{margin:6px 0}
 
-/* Clients */
+/* ===== Clients slider ===== */
 .logo-slider{overflow:hidden}
 .logo-track{display:flex;align-items:center;gap:28px;will-change:transform;animation:marquee var(--marqueeDur,40s) linear infinite}
 .logo-slider:hover .logo-track{animation-play-state:paused}
@@ -86,7 +109,7 @@ ul.clean li{margin:6px 0}
 .logo-item img:hover{filter:none;opacity:1;transform:translateY(-2px)}
 @keyframes marquee{from{transform:translateX(0)}to{transform:translateX(calc(-1 * var(--loopW,1000px)))}}
 
-/* Footer + FABs (same as other page) */
+/* ===== Footer & FABs ===== */
 .footer-modern.v2{background:#0b0c11;color:#cfd3da;border-top:1px solid #10131a}
 .footer-modern.v2 a{color:#cfd3da}.footer-modern.v2 a:hover{color:#fff}
 .footer-cta{margin:48px auto 26px;padding:18px 22px;display:flex;align-items:center;justify-content:space-between;gap:16px;background:#12161d;border:1px solid #1e2531;border-radius:18px;box-shadow:0 18px 40px rgba(0,0,0,.35)}
@@ -121,36 +144,53 @@ ul.clean li{margin:6px 0}
 </head>
 <body id="top">
 
+<!-- ===== Header ===== -->
 <header class="site-header" id="siteHeader">
   <div class="hdr-container">
-    <a class="brand" href="index.html"><img src="logo-03.webp" alt="Emtithal Logo"></a>
+    <a class="brand" href="index.html" aria-label="Emtithal Home">
+      <img class="logo-main" src="images-/logo-03.webp" alt="Emtithal Logo (light)">
+      <img class="logo-scroll" src="images-/logo-05.webp" alt="Emtithal Logo (dark)">
+    </a>
+
     <nav aria-label="Primary">
       <ul class="main-menu" id="mainMenu">
-        <li><a href="index.html">Home</a></li><li><a href="about.html">About</a></li>
-        <li id="menuServices"><a href="services.html">Services <span class="caret">▾</span></a>
-          <div class="dropdown"><a href="environmental.html">Environmental Consultancy</a><a href="mobile-lab.html">Mobile Lab</a><a href="pest-control.html">Pest Control</a></div>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+
+        <li id="menuServices">
+          <a href="services.html" aria-haspopup="true" aria-expanded="false">Services <span class="caret">▾</span></a>
+          <div class="dropdown" role="menu">
+            <a href="environmental.html">Environmental Consultancy</a>
+            <a href="mobile-lab.html" aria-current="page">Mobile Lab</a>
+            <a href="pest-control.html">Pest Control</a>
+          </div>
         </li>
-        <li><a href="blog.html">Blog</a></li><li><a href="contact.html">Contact</a></li>
+
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="contact.html">Contact</a></li>
       </ul>
     </nav>
+
     <a class="btn btn-primary" href="contact.html#contactForm">Book a Visit</a>
     <button id="navToggle" class="nav-toggle" aria-expanded="false" aria-controls="mainMenu">☰</button>
   </div>
 </header>
 
-<section class="hero">
+<!-- ===== Hero ===== -->
+<section class="hero" role="banner">
   <div class="hero-inner">
     <h1>Mobile Lab</h1>
-    <p class="lead">On-site residue & swab testing with same-day guidance, trend dashboards, and CAPA follow-up.</p>
+    <p class="lead">On-site residue &amp; swab testing with same-day guidance, trend dashboards, and CAPA follow-up.</p>
   </div>
 </section>
 
+<!-- ===== Scope ===== -->
 <section class="section">
   <div class="container grid grid-2">
     <div>
       <h2 class="title">Scope</h2>
       <ul class="clean">
-        <li>ATP & protein swabs, allergens, and environmental sampling.</li>
+        <li>ATP &amp; protein swabs, allergens, and environmental sampling.</li>
         <li>Zone mapping and <strong>cleaning validation</strong> plans.</li>
         <li>Result interpretation, risk ranking, and retest cadence.</li>
         <li>Operator coaching to lock in new behaviors.</li>
@@ -164,9 +204,10 @@ ul.clean li{margin:6px 0}
   </div>
 </section>
 
+<!-- ===== Deliverables ===== -->
 <section class="section" style="padding-top:0">
   <div class="container grid grid-2">
-    <div class="card"><img src="blog---2.webp" alt="Trend dashboards"></div>
+    <div class="card"><img src="images-/blog---2.webp" alt="Trend dashboards"></div>
     <div>
       <h2 class="title">Deliverables</h2>
       <ul class="clean">
@@ -180,60 +221,179 @@ ul.clean li{margin:6px 0}
   </div>
 </section>
 
+<!-- ===== Clients ===== -->
 <section class="section" style="padding-top:0">
   <div class="container">
     <h2 class="title">Trusted by Leading Organizations</h2>
     <p class="muted" style="margin-bottom:10px">A selection of entities we’ve supported through programs and audits.</p>
-    <div class="logo-slider" id="labClientSlider">
+    <div class="logo-slider" id="labClientSlider" aria-label="Client logos (auto-scroll, pause on hover)">
       <div class="logo-track">
-        <div class="logo-item"><img src="al-ojaimi.webp" alt="Al Ojaimi"></div>
-        <div class="logo-item"><img src="royal-comission.webp" alt="Royal Commission"></div>
-        <div class="logo-item"><img src="saudi-electric.webp" alt="Saudi Electric"></div>
-        <div class="logo-item"><img src="islamic-ministiru.webp" alt="Islamic Ministry"></div>
-        <div class="logo-item"><img src="sirc.webp" alt="SIRC"></div>
+        <div class="logo-item"><img src="images-/al-ojaimi.webp" alt="Al Ojaimi"></div>
+        <div class="logo-item"><img src="images-/royal-comission.webp" alt="Royal Commission"></div>
+        <div class="logo-item"><img src="images-/saudi-electric.webp" alt="Saudi Electric"></div>
+        <div class="logo-item"><img src="images-/islamic-ministiru.webp" alt="Islamic Ministry"></div>
+        <div class="logo-item"><img src="images-/sirc.webp" alt="SIRC"></div>
       </div>
     </div>
   </div>
 </section>
 
+<!-- ===== Footer ===== -->
 <footer class="footer-modern v2">
-  <div class="container footer-cta"><p>Need same-day results? We’re ready.</p><a class="btn btn-primary" href="contact.html#contactForm">Request a Visit</a></div>
+  <div class="container footer-cta">
+    <p>Need same-day results? We’re ready.</p>
+    <a class="btn btn-primary" href="contact.html#contactForm">Request a Visit</a>
+  </div>
+
   <div class="container footer-columns">
-    <div><h5 class="foot-title"><span class="foot-ico"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M6 3h7l5 5v13a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Zm7 1.5V9h4.5L13 4.5ZM8 11h8v1.8H8V11Zm0 3.8h8v1.8H8V14.8Zm0 3.8h5.5v1.8H8V18.6Z"/></svg></span>CONTENT</h5>
-      <ul class="foot-links"><li><a href="services.html">Popular Services</a></li><li><a href="blog.html">Guides &amp; News</a></li><li><a href="services.html#before-after">Before &amp; After</a></li></ul></div>
-    <div><h5 class="foot-title"><span class="foot-ico"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a10 10 0 1 1 0 20 10 10 0 0 1 0-20Zm0 6a1.25 1.25 0 1 0 0 2.5A1.25 1.25 0 0 0 12 8Zm1.6 9h-3.2v-1.8h1.2V12h-1.2v-1.8h2a1 1 0 0 1 1 1v3.8h1.2V17Z"/></svg></span>INFORMATION</h5>
-      <ul class="foot-links"><li><a href="about.html">About Us</a></li><li><a href="services.html">Our Services</a></li><li><a href="contact.html#contactForm">Request Service</a></li></ul></div>
-    <div><h5 class="foot-title"><span class="foot-ico"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2 4 6v6c0 5 3.4 8.6 8 10 4.6-1.4 8-5 8-10V6l-8-4Zm-1.2 13.4-3.2-3.2 1.4-1.4 1.8 1.8 3.9-3.9 1.4 1.4-5.3 5.3Z"/></svg></span>SUPPORT &amp; LEGAL</h5>
-      <ul class="foot-links"><li><a href="terms.html">Terms &amp; Conditions</a></li><li><a href="privacy.html">Privacy Policy</a></li><li><a href="cookies.html">Cookies Policy</a></li></ul></div>
-    <div><h5 class="foot-title"><span class="foot-ico"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M20 3H4a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h3l5 3 5-3h3a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2Zm-3 7H7V8h10v2Zm0 4H7v-2h10v2Z"/></svg></span>CONNECT WITH US</h5>
-      <div class="social-row"><a class="social" href="#"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M22 12.07C22 6.57 17.52 2.1 12 2.1S2 6.57 2 12.07c0 4.98 3.66 9.11 8.44 9.93v-7.02H7.9v-2.9h2.54V9.75c0-2.5 1.49-3.89 3.77-3.89 1.09 0 2.23.2 2.23.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56v1.86h2.78l-.44 2.9h-2.34V22c4.78-.82 8.44-4.95 8.44-9.93Z"/></svg></a>
-        <a class="social" href="#"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2.2c3.2 0 3.58.01 4.85.07 1.17.05 1.96.24 2.67.51.73.28 1.35.66 1.96 1.27.6.6.99 1.22 1.26 1.95.27.71.46 1.5.52 2.67.05 1.27.06 1.65.06 4.85s-.01 3.58-.06 4.85c-.06 1.17-.25 1.95-.52 2.67-.27.73-.66 1.35-1.26 1.95-.61.61-1.23.99-1.96 1.27-.71.27-1.5.46-2.67.51-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.96-.24-2.67-.51a5.3 5.3 0 0 1-1.96-1.27 5.3 5.3 0 0 1-1.27-1.95c-.27-.72-.46-1.5-.51-2.67C2.21 15.58 2.2 15.2 2.2 12s.01-3.58.07-4.85c.05-1.17.24-1.96.51-2.67.28-.73.66-1.35 1.27-1.96.6-.6 1.22-.99 1.95-1.26.71-.27 1.5-.46 2.67-.51C8.42 2.21 8.8 2.2 12 2.2Zm0 3.5a6.5 6.5 0 1 1 0 13 6.5 6.5 0 0 1 0-13Zm5.2-2.76a1.24 1.24 0 1 1 0 2.48 1.24 1.24 0 0 1 0-2.48Z"/></svg></a>
-        <a class="social" href="#"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M20.45 20.45h-3.55v-5.68c0-1.36-.02-3.11-1.9-3.11-1.9 0-2.19 1.48-2.19 3v5.79H9.26V9.5h3.41v1.49h.05c.48-.91 1.65-1.87 3.39-1.87 3.62 0 4.29 2.38 4.29 5.47v5.86ZM5.34 8.01a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12Zm-1.78 12.44h3.56V9.5H3.56v10.95Z"/></svg></a>
+    <div>
+      <h5 class="foot-title"><span class="foot-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M6 3h7l5 5v13a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Zm7 1.5V9h4.5L13 4.5ZM8 11h8v1.8H8V11Zm0 3.8h8v1.8H8V14.8Zm0 3.8h5.5v1.8H8V18.6Z"/></svg></span>CONTENT</h5>
+      <ul class="foot-links">
+        <li><a href="services.html">Popular Services</a></li>
+        <li><a href="blog.html">Guides &amp; News</a></li>
+        <li><a href="services.html#before-after">Before &amp; After</a></li>
+      </ul>
+    </div>
+    <div>
+      <h5 class="foot-title"><span class="foot-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a10 10 0 1 1 0 20 10 10 0 0 1 0-20Zm0 6a1.25 1.25 0 1 0 0 2.5A1.25 1.25 0 0 0 12 8Zm1.6 9h-3.2v-1.8h1.2V12h-1.2v-1.8h2a1 1 0 0 1 1 1v3.8h1.2V17Z"/></svg></span>INFORMATION</h5>
+      <ul class="foot-links">
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="services.html">Our Services</a></li>
+        <li><a href="contact.html#contactForm">Request Service</a></li>
+      </ul>
+    </div>
+    <div>
+      <h5 class="foot-title"><span class="foot-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2 4 6v6c0 5 3.4 8.6 8 10 4.6-1.4 8-5 8-10V6l-8-4Zm-1.2 13.4-3.2-3.2 1.4-1.4 1.8 1.8 3.9-3.9 1.4 1.4-5.3 5.3Z"/></svg></span>SUPPORT &amp; LEGAL</h5>
+      <ul class="foot-links">
+        <li><a href="terms.html">Terms &amp; Conditions</a></li>
+        <li><a href="privacy.html">Privacy Policy</a></li>
+        <li><a href="cookies.html">Cookies Policy</a></li>
+      </ul>
+    </div>
+    <div>
+      <h5 class="foot-title"><span class="foot-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M20 3H4a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h3l5 3 5-3h3a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2Zm-3 7H7V8h10v2Zm0 4H7v-2h10v2Z"/></svg></span>CONNECT WITH US</h5>
+      <div class="social-row" aria-label="Social links">
+        <a class="social" href="#" aria-label="Facebook"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M22 12.07C22 6.57 17.52 2.1 12 2.1S2 6.57 2 12.07c0 4.98 3.66 9.11 8.44 9.93v-7.02H7.9v-2.9h2.54V9.75c0-2.5 1.49-3.89 3.77-3.89 1.09 0 2.23.2 2.23.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56v1.86h2.78l-.44 2.9h-2.34V22c4.78-.82 8.44-4.95 8.44-9.93Z"/></svg></a>
+        <a class="social" href="#" aria-label="Instagram"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2.2c3.2 0 3.58.01 4.85.07 1.17.05 1.96.24 2.67.51.73.28 1.35.66 1.96 1.27.6.6.99 1.22 1.26 1.95.27.71.46 1.5.52 2.67.05 1.27.06 1.65.06 4.85s-.01 3.58-.06 4.85c-.06 1.17-.25 1.95-.52 2.67-.27.73-.66 1.35-1.26 1.95-.61.61-1.23.99-1.96 1.27-.71.27-1.5.46-2.67.51-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.96-.24-2.67-.51A5.3 5.3 0 0 1 3.1 19.6 5.3 5.3 0 0 1 1.83 17.7c-.27-.72-.46-1.5-.51-2.67C1.27 13.58 1.26 13.2 1.26 10s.01-3.58.07-4.85c.05-1.17.24-1.96.51-2.67.28-.73.66-1.35 1.27-1.96.6-.6 1.22-.99 1.95-1.26.71-.27 1.5-.46 2.67-.51C8.42 2.21 8.8 2.2 12 2.2Zm0 3.5a6.5 6.5 0 1 1 0 13 6.5 6.5 0 0 1 0-13Zm5.2-2.76a1.24 1.24 0 1 1 0 2.48 1.24 1.24 0 0 1 0-2.48Z"/></svg></a>
+        <a class="social" href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M20.45 20.45h-3.55v-5.68c0-1.36-.02-3.11-1.9-3.11-1.9 0-2.19 1.48-2.19 3v5.79H9.26V9.5h3.41v1.49h.05c.48-.91 1.65-1.87 3.39-1.87 3.62 0 4.29 2.38 4.29 5.47v5.86ZM5.34 8.01a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12Zm-1.78 12.44h3.56V9.5H3.56v10.95Z"/></svg></a>
       </div>
     </div>
   </div>
-  <div class="container footer-sub"><div>Emtithal Environmental Consulting Projects.</div><div>Pest Control • Environmental • Food Safety • HSE • IPM</div></div>
-  <div class="foot-bottom"><div class="container bottom-inner">
-    <img class="bottom-logo" src="logo-05.webp" alt="Emtithal Logo">
-    <div>&copy; 2025 Emtithal Consulting. All rights reserved. · Developed by <a href="mailto:ismailderia123@gmail.com">Ismail Deria</a></div>
-    <a class="btn ghost" href="contact.html#contactForm">Get Started</a>
-  </div></div>
+
+  <div class="container footer-sub">
+    <div>Emtithal Environmental Consulting Projects.</div>
+    <div>Pest Control • Environmental • Food Safety • HSE • IPM</div>
+  </div>
+
+  <div class="foot-bottom">
+    <div class="container bottom-inner">
+      <img class="bottom-logo" src="images-/logo-05.webp" alt="Emtithal Logo">
+      <div>&copy; 2025 Emtithal Consulting. All rights reserved. · Developed by
+        <a href="mailto:ismailderia123@gmail.com">Ismail Deria</a>
+      </div>
+      <a class="btn ghost" href="contact.html#contactForm">Get Started</a>
+    </div>
+  </div>
 </footer>
 
-<a class="whatsapp-btn" href="https://wa.me/966559906886" target="_blank" rel="noopener" aria-label="Chat on WhatsApp"><svg viewBox="0 0 32 32"><path fill="currentColor" d="M19.1 17.4c-.2-.1-1-.5-1.2-.6s-.3-.1-.5.1c-.1.2-.6.6-.7.7-.1.1-.3.1-.5 0-.2-.1-.9-.3-1.7-1.1-.6-.6-1.1-1.3-1.2-1.5-.1-.2 0-.3.1-.4.1-.1.2-.3.3-.4.1-.1.1-.2.2-.3.1-.1.1-.2 0-.4-.1-.2-.5-1.2-.7-1.6-.2-.4-.4-.3-.5-.3h-.4c-.1 0-.4.1-.6.3-.2.2-.8.8-.8 1.9s.8 2.1.9 2.2c.1.1 1.6 2.5 3.9 3.5.5.2.9.4 1.2.5.5.2 1 .2 1.3.1.4-.1 1.2-.5 1.4-1 .2-.5.2-.9.2-1 0-.1-.1-.1-.3-.2zM16 5.3c-5.9 0-10.7 4.8-10.7 10.7 0 2 .6 3.9 1.6 5.5L6 27l5.7-1.5c1.6.9 3.4 1.4 5.3 1.4 5.9 0 10.7-4.8 10.7-10.7S21.9 5.3 16 5.3zm0 19.3c-1.7 0-3.3-.5-4.7-1.3l-.3-.2-3.4.9.9-3.3-.2-.3c-.9-1.4-1.4-3-1.4-4.7 0-4.9 4-8.9 8.9-8.9s8.9 4 8.9 8.9-4 8.9-8.9 8.9z"/></svg></a>
-<button id="backToTop" class="back-to-top" aria-label="Back to top"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
+<!-- FABs -->
+<a class="whatsapp-btn" href="https://wa.me/966559906886" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
+  <svg viewBox="0 0 32 32" aria-hidden="true"><path fill="currentColor" d="M19.1 17.4c-.2-.1-1-.5-1.2-.6s-.3-.1-.5.1c-.1.2-.6.6-.7.7-.1.1-.3.1-.5 0-.2-.1-.9-.3-1.7-1.1-.6-.6-1.1-1.3-1.2-1.5-.1-.2 0-.3.1-.4.1-.1.2-.3.3-.4.1-.1.1-.2.2-.3.1-.1.1-.2 0-.4-.1-.2-.5-1.2-.7-1.6-.2-.4-.4-.3-.5-.3h-.4c-.1 0-.4.1-.6.3-.2.2-.8.8-.8 1.9s.8 2.1.9 2.2c.1.1 1.6 2.5 3.9 3.5.5.2.9.4 1.2.5.5.2 1 .2 1.3.1.4-.1 1.2-.5 1.4-1 .2-.5.2-.9.2-1 0-.1-.1-.1-.3-.2zM16 5.3c-5.9 0-10.7 4.8-10.7 10.7 0 2 .6 3.9 1.6 5.5L6 27l5.7-1.5c1.6.9 3.4 1.4 5.3 1.4 5.9 0 10.7-4.8 10.7-10.7S21.9 5.3 16 5.3zm0 19.3c-1.7 0-3.3-.5-4.7-1.3l-.3-.2-3.4.9.9-3.3-.2-.3c-.9-1.4-1.4-3-1.4-4.7 0-4.9 4-8.9 8.9-8.9s8.9 4 8.9 8.9-4 8.9-8.9 8.9z"/></svg>
+</a>
+
+<button id="backToTop" class="back-to-top" aria-label="Back to top">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+</button>
 
 <script>
-/* header scroll */const hdr=document.getElementById('siteHeader');addEventListener('scroll',()=>hdr.classList.toggle('scrolled',scrollY>10),{passive:true});
-/* mobile menu */const navToggle=document.getElementById('navToggle'),mainMenu=document.getElementById('mainMenu');navToggle?.addEventListener('click',()=>{const open=mainMenu.classList.toggle('open');navToggle.setAttribute('aria-expanded',open);});
-/* mobile dropdown */const menuServices=document.getElementById('menuServices');menuServices?.addEventListener('click',e=>{if(innerWidth<=760){if(!menuServices.classList.contains('open-dd')) e.preventDefault();menuServices.classList.toggle('open-dd');}});
-/* desktop hover-intent */let ddWired=false;function wireDropdownTimers(){if(innerWidth<=760){unwireDropdownTimers();return;}if(ddWired)return;document.querySelectorAll('.main-menu > li').forEach(li=>{const dd=li.querySelector('.dropdown');if(!dd)return;let t;const show=()=>{clearTimeout(t);dd.classList.add('js-open');};const hide=()=>{t=setTimeout(()=>dd.classList.remove('js-open'),250);};li.__ddShow=show;li.__ddHide=hide;li.addEventListener('mouseenter',show);li.addEventListener('mouseleave',hide);dd.addEventListener('mouseenter',show);dd.addEventListener('mouseleave',hide);});ddWired=true;}function unwireDropdownTimers(){document.querySelectorAll('.main-menu > li').forEach(li=>{const dd=li.querySelector('.dropdown');if(!dd)return;if(li.__ddShow){li.removeEventListener('mouseenter',li.__ddShow);dd.removeEventListener('mouseenter',li.__ddShow);}if(li.__ddHide){li.removeEventListener('mouseleave',li.__ddHide);dd.removeEventListener('mouseleave',li.__ddHide);}dd.classList.remove('js-open');li.__ddShow=null;li.__ddHide=null;});ddWired=false;}
-addEventListener('load',wireDropdownTimers);addEventListener('resize',()=>{setTimeout(()=>{unwireDropdownTimers();wireDropdownTimers();},150)},{passive:true});
-/* clients loop */(function(){const slider=document.getElementById('labClientSlider');if(!slider)return;const GAP=28,track=slider.querySelector('.logo-track');const originals=Array.from(track.children).map(n=>n.cloneNode(true));function setWidth(nodes){const rects=nodes.map(n=>n.getBoundingClientRect().width);let w=0;rects.forEach((rw,i)=>{w+=rw;if(i)w+=GAP;});return w;}function build(){track.innerHTML='';originals.forEach(n=>track.appendChild(n.cloneNode(true)));const one=Array.from(track.children);let setW=setWidth(one);while(track.scrollWidth<slider.clientWidth+setW*1.2){one.forEach(n=>track.appendChild(n.cloneNode(true)));}one.forEach(n=>track.appendChild(n.cloneNode(true)));const firstSet=Array.from(track.children).slice(0,originals.length);setW=setWidth(firstSet);slider.style.setProperty('--loopW',setW+'px');const dur=Math.max(16,Math.round(setW/55));track.style.setProperty('--marqueeDur',dur+'s');}build();let t;addEventListener('resize',()=>{clearTimeout(t);t=setTimeout(build,200);},{passive:true});})();
-const backBtn=document.getElementById('backToTop');function toggleTop(){backBtn.classList.toggle('show',scrollY>280);}addEventListener('scroll',toggleTop,{passive:true});toggleTop();backBtn.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+/* header scroll */
+const hdr=document.getElementById('siteHeader');
+addEventListener('scroll',()=>hdr.classList.toggle('scrolled',scrollY>10),{passive:true});
+
+/* mobile menu */
+const navToggle=document.getElementById('navToggle'), mainMenu=document.getElementById('mainMenu');
+navToggle?.addEventListener('click',()=>{
+  const open=mainMenu.classList.toggle('open');
+  navToggle.setAttribute('aria-expanded',open);
+});
+
+/* mobile dropdown */
+const menuServices=document.getElementById('menuServices');
+if(menuServices){
+  let hideTimer; const HIDE_AFTER=700;
+  const trigger=menuServices.querySelector('a');
+  trigger.addEventListener('click',e=>{
+    if(innerWidth<=760){ e.preventDefault(); menuServices.classList.toggle('open-dd'); }
+  });
+  menuServices.addEventListener('pointerenter',()=>clearTimeout(hideTimer));
+  menuServices.addEventListener('pointerleave',()=>hideTimer=setTimeout(()=>menuServices.classList.remove('open-dd'),HIDE_AFTER));
+  document.addEventListener('click',e=>{
+    if(innerWidth<=760 && !menuServices.contains(e.target)) menuServices.classList.remove('open-dd');
+  },{passive:true});
+}
+
+/* desktop hover-intent */
+let ddWired=false;
+function wireDropdownTimers(){
+  if(innerWidth<=760){ unwireDropdownTimers(); return; }
+  if(ddWired) return;
+  document.querySelectorAll('.main-menu > li').forEach(li=>{
+    const dd=li.querySelector('.dropdown'); if(!dd) return;
+    let t;
+    const show=()=>{ clearTimeout(t); dd.classList.add('js-open'); };
+    const hide=()=>{ t=setTimeout(()=>dd.classList.remove('js-open'),250); };
+    li.__ddShow=show; li.__ddHide=hide;
+    li.addEventListener('mouseenter',show); li.addEventListener('mouseleave',hide);
+    dd.addEventListener('mouseenter',show); dd.addEventListener('mouseleave',hide);
+  });
+  ddWired=true;
+}
+function unwireDropdownTimers(){
+  document.querySelectorAll('.main-menu > li').forEach(li=>{
+    const dd=li.querySelector('.dropdown'); if(!dd) return;
+    if(li.__ddShow){ li.removeEventListener('mouseenter',li.__ddShow); dd.removeEventListener('mouseenter',li.__ddShow); }
+    if(li.__ddHide){ li.removeEventListener('mouseleave',li.__ddHide); dd.removeEventListener('mouseleave',li.__ddHide); }
+    dd.classList.remove('js-open'); li.__ddShow=null; li.__ddHide=null;
+  });
+  ddWired=false;
+}
+addEventListener('load',wireDropdownTimers);
+addEventListener('resize',()=>{ setTimeout(()=>{ unwireDropdownTimers(); wireDropdownTimers(); },150); },{passive:true});
+
+/* clients loop */
+(function(){
+  const slider=document.getElementById('labClientSlider'); if(!slider) return;
+  const GAP=28, track=slider.querySelector('.logo-track');
+  const originals=Array.from(track.children).map(n=>n.cloneNode(true));
+
+  function setWidth(nodes){
+    const rects=nodes.map(n=>n.getBoundingClientRect().width); let w=0;
+    rects.forEach((rw,i)=>{ w+=rw; if(i) w+=GAP; });
+    return w;
+  }
+
+  function build(){
+    track.innerHTML='';
+    originals.forEach(n=>track.appendChild(n.cloneNode(true)));
+    const one=Array.from(track.children);
+    let setW=setWidth(one);
+    while(track.scrollWidth<slider.clientWidth+setW*1.2){ one.forEach(n=>track.appendChild(n.cloneNode(true))); }
+    one.forEach(n=>track.appendChild(n.cloneNode(true)));
+    const firstSet=Array.from(track.children).slice(0,originals.length);
+    setW=setWidth(firstSet);
+    slider.style.setProperty('--loopW',setW+'px');
+    const dur=Math.max(16,Math.round(setW/55));
+    track.style.setProperty('--marqueeDur',dur+'s');
+  }
+  build();
+  let t; addEventListener('resize',()=>{ clearTimeout(t); t=setTimeout(build,200); },{passive:true});
+})();
+
+/* back to top */
+const backBtn=document.getElementById('backToTop');
+function toggleTop(){ backBtn.classList.toggle('show',scrollY>280); }
+addEventListener('scroll',toggleTop,{passive:true}); toggleTop();
+backBtn.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
 </script>
 </body>
 </html>
-
-
-
