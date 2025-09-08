@@ -41,7 +41,7 @@ a{text-decoration:none}
 .main-menu a:hover::after{width:100%}
 .caret{margin-left:6px;display:inline-block;transform:translateY(-1px)}
 .dropdown{
-  position:absolute;top:calc(100% + 10px);left:0;min-width:260px;background:#fff;border:1px solid #e6edf1;border-radius:12px;padding:8px;
+  position:absolute;top:calc(100% + 10px);left:0;min-width:260px;background:#fff;border:1px solid #000000;border-radius:12px;padding:8px;
   opacity:0;visibility:hidden;transform:translateY(8px);pointer-events:none;will-change:opacity,transform;
   transition:opacity .18s ease var(--dd-hide-delay),transform .18s ease var(--dd-hide-delay),visibility 0s linear var(--dd-hide-delay);
   box-shadow:0 16px 36px rgba(10,20,30,.15)
@@ -314,4 +314,5 @@ backBtn.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}))
 </script>
 </body>
 </html>
+
 
