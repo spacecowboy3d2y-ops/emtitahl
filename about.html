@@ -191,6 +191,11 @@ a{text-decoration:none}
 .back-to-top svg{width:20px;height:20px}
 
 @media (prefers-reduced-motion:reduce){.logo-track{animation-duration:0s!important}}
+
+/* ====== (ADDED) Scroll logo swap (no markup changes) ====== */
+.brand .logo-scroll{display:none;height:52px}
+.site-header.scrolled .brand .logo-scroll{display:block}
+.site-header.scrolled .brand img.logo-main{display:none}
 </style>
 </head>
 <body id="top">
@@ -453,62 +458,4 @@ if(menuServices){
   },{passive:true});
 }
 
-/* Desktop hover-intent timer for dropdowns */
-let ddWired=false;
-function wireDropdownTimers(){
-  if(innerWidth<=760){ unwireDropdownTimers(); return; }
-  if(ddWired) return;
-  const items=[...document.querySelectorAll('.main-menu > li')];
-  items.forEach(li=>{
-    const dd=li.querySelector('.dropdown'); if(!dd) return;
-    let t;
-    const show=()=>{ clearTimeout(t); dd.classList.add('js-open'); };
-    const hide=()=>{ t=setTimeout(()=>dd.classList.remove('js-open'), 250); };
-    li.__ddShow=show; li.__ddHide=hide;
-    li.addEventListener('mouseenter', show);
-    li.addEventListener('mouseleave', hide);
-    dd.addEventListener('mouseenter', show);
-    dd.addEventListener('mouseleave', hide);
-  });
-  ddWired=true;
-}
-function unwireDropdownTimers(){
-  const items=[...document.querySelectorAll('.main-menu > li')];
-  items.forEach(li=>{
-    const dd=li.querySelector('.dropdown'); if(!dd) return;
-    if(li.__ddShow){ li.removeEventListener('mouseenter', li.__ddShow); dd.removeEventListener('mouseenter', li.__ddShow); }
-    if(li.__ddHide){ li.removeEventListener('mouseleave', li.__ddHide); dd.removeEventListener('mouseleave', li.__ddHide); }
-    dd.classList.remove('js-open'); li.__ddShow=null; li.__ddHide=null;
-  });
-  ddWired=false;
-}
-addEventListener('load', wireDropdownTimers);
-addEventListener('resize', ()=>{ setTimeout(()=>{ unwireDropdownTimers(); wireDropdownTimers(); }, 150); }, {passive:true});
-
-/* Clients marquee — seamless loop */
-(function(){
-  const slider=document.getElementById('aboutClientSlider'); if(!slider) return;
-  const GAP=28; const track=slider.querySelector('.logo-track');
-  const originals=Array.from(track.children).map(n=>n.cloneNode(true));
-  function setWidth(nodes){const rects=nodes.map(n=>n.getBoundingClientRect().width);let w=0;rects.forEach((rw,i)=>{w+=rw;if(i)w+=GAP;});return w;}
-  function build(){
-    track.innerHTML=''; originals.forEach(n=>track.appendChild(n.cloneNode(true)));
-    const one=Array.from(track.children); let setW=setWidth(one);
-    while(track.scrollWidth<slider.clientWidth+setW*1.2){ one.forEach(n=>track.appendChild(n.cloneNode(true))); }
-    one.forEach(n=>track.appendChild(n.cloneNode(true)));
-    const firstSet=Array.from(track.children).slice(0, originals.length);
-    setW=setWidth(firstSet);
-    slider.style.setProperty('--loopW', setW+'px');
-    const dur=Math.max(16, Math.round(setW/55)); track.style.setProperty('--marqueeDur', dur+'s');
-  }
-  build(); let t; addEventListener('resize',()=>{clearTimeout(t); t=setTimeout(build,200);},{passive:true});
-})();
-
-/* Back to top */
-const backBtn=document.getElementById('backToTop');
-function toggleTop(){ backBtn.classList.toggle('show', scrollY>280); }
-addEventListener('scroll', toggleTop, {passive:true}); toggleTop();
-backBtn.addEventListener('click', ()=>window.scrollTo({top:0,behavior:'smooth'}));
-</script>
-</body>
-</html>
+/* Desktop hover
