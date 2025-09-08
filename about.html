@@ -42,58 +42,53 @@ a{text-decoration:none}
 .site-header{
   position:fixed; inset:0 0 auto; z-index:1000; height:72px;
   display:flex; align-items:center; background:var(--hdr-dark); color:#e7f5f4;
-  box-shadow:0 6px 20px rgba(0,0,0,.35); transition:background .2s,height .2s,box-shadow .2s
+  box-shadow:0 6px 20px rgba(0,0,0,.35);
+  transition:background .2s,height .2s,box-shadow .2s,color .2s
 }
+/* White on scroll (matches environmental page) */
 .site-header.scrolled{
   background:var(--hdr-light); color:var(--teal); height:64px;
-  box-shadow:0 8px 24px rgba(0,0,0,.15)
+  box-shadow:0 8px 24px rgba(0,0,0,.15); border-bottom:1px solid #e6edf1;
 }
+
 .brand img{height:52px}
+/* Logo swap: light logo on dark header; dark logo on white header */
+.brand .logo-dark{display:none}
+.site-header.scrolled .brand .logo-light{display:none}
+.site-header.scrolled .brand .logo-dark{display:block}
 
 .main-menu{list-style:none;margin:0;padding:0;display:flex;gap:24px;align-items:center;position:relative}
 .main-menu>li{position:relative}
 
-/* Base link style becomes a small rounded chip so the hover color swap is clear */
+/* Base link style chip */
 .main-menu a{
   color:inherit;font-weight:600;position:relative;display:inline-block;
   padding:8px 12px;border-radius:10px;line-height:1
 }
 
-/* ----- Hover styles: different for normal vs sticky ----- */
+/* Link color states to ensure teal text on white header */
+.site-header.scrolled .main-menu a{ color:var(--teal); }
+
+/* Hover styles */
 /* Normal header (dark): hover = TEAL background with WHITE text */
 .site-header:not(.scrolled) .main-menu a:hover,
 .site-header:not(.scrolled) .main-menu a:focus-visible{
   background:var(--teal); color:#ffffff
 }
-
 /* Sticky header (white): hover = WHITE background, TEAL text + thin teal border */
 .site-header.scrolled .main-menu a:hover,
 .site-header.scrolled .main-menu a:focus-visible{
   background:#ffffff; color:var(--teal);
   outline:1px solid color-mix(in srgb, var(--teal) 70%, transparent);
   box-shadow:0 1px 0 rgba(0,0,0,.03)
-}  
-
-/* two-logo swap */
-.brand .logo-scroll{display:none}
-.site-header.scrolled .brand .logo-main{display:none}
-.site-header.scrolled .brand .logo-scroll{display:block}
-
-.main-menu{list-style:none;margin:0;padding:0;display:flex;gap:24px;align-items:center}
-.main-menu>li{position:relative}
-.main-menu a{color:inherit;text-decoration:none;font-weight:600;padding-bottom:6px;position:relative}
-.main-menu a::after{content:"";position:absolute;left:0;bottom:0;height:2px;width:0;background:var(--blue);transition:width .25s}
-.site-header:not(.scrolled) .main-menu a{color:#e7f5f4}
-.site-header.scrolled .main-menu a{color:var(--teal)}
-.main-menu a:hover::after{width:100%}
-.caret{margin-left:6px;display:inline-block;transform:translateY(-1px)}
+}
 
 .caret{margin-left:6px;display:inline-block;transform:translateY(-1px)}
 
-/* Dropdown: always white, sits above siblings */
+/* Dropdown: always white, subtle border (same as environmental page) */
 .dropdown{
   position:absolute; top:calc(100% + 10px); left:0; min-width:260px;
-  background:#fff; border:1px solid #fff; border-radius:12px; padding:8px;
+  background:#fff; border:1px solid #e6edf1; border-radius:12px; padding:8px;
   opacity:0; visibility:hidden; transform:translateY(8px);
   pointer-events:none; will-change:opacity,transform;
   transition:
@@ -106,7 +101,7 @@ a{text-decoration:none}
 .dropdown a{display:block;padding:10px 12px;border-radius:8px;color:var(--teal)}
 .dropdown a:hover{background:#1f4f4c;color:#fff}
 
-/* show state — instant (no delay) */
+/* Show state — instant (no delay) */
 .main-menu li:hover>.dropdown,
 .main-menu .open-dd>.dropdown,
 .dropdown.js-open{
@@ -205,11 +200,6 @@ a{text-decoration:none}
 .back-to-top svg{width:20px;height:20px}
 
 @media (prefers-reduced-motion:reduce){.logo-track{animation-duration:0s!important}}
-
-/* ====== (ADDED) Scroll logo swap (no markup changes) ====== */
-.brand .logo-scroll{display:none;height:52px}
-.site-header.scrolled .brand .logo-scroll{display:block}
-.site-header.scrolled .brand img.logo-main{display:none}
 </style>
 </head>
 <body id="top">
@@ -218,10 +208,10 @@ a{text-decoration:none}
 <header class="site-header" id="siteHeader">
   <div class="hdr-container">
     <a class="brand" href="index.html" aria-label="Emtithal Home">
-      <!-- MAIN MENU LOGO (teal for dark header) -->
-      <img class="logo-main" src="logo-04.webp" alt="Emtithal Logo — Teal on dark">
-      <!-- SCROLL MENU LOGO (dark/colored for light header) -->
-      <img class="logo-scroll" src="logo-01.webp" alt="Emtithal Logo — Dark on light">
+      <!-- Light logo for dark header -->
+      <img class="logo-light" src="images-/logo-01.png" alt="Emtithal Logo">
+      <!-- Dark logo for white header (replace path if needed) -->
+      <img class="logo-dark" src="images-/logo-01-dark.png" alt="Emtithal Logo (dark on white)">
     </a>
 
     <nav aria-label="Primary">
@@ -433,7 +423,7 @@ a{text-decoration:none}
 
 <!-- FABs -->
 <a class="whatsapp-btn" href="https://wa.me/966559906886" target="_blank" aria-label="Chat on WhatsApp" rel="noopener">
-  <svg viewBox="0 0 32 32" aria-hidden="true"><path fill="currentColor" d="M19.1 17.4c-.2-.1-1-.5-1.2-.6s-.3-.1-.5.1c-.1.2-.6.6-.7.7-.1.1-.3.1-.5 0-.2-.1-.9-.3-1.7-1.1-.6-.6-1.1-1.3-1.2-1.5-.1-.2 0-.3.1-.4.1-.1.2-.3.3-.4.1-.1.1-.2.2-.3.1-.1.1-.2 0-.4-.1-.2-.5-1.2-.7-1.6-.2-.4-.4-.3-.5-.3h-.4c-.1 0-.4.1-.6.3-.2.2-.8.8-.8 1.9s.8 2.1.9 2.2c.1.1 1.6 2.5 3.9 3.5.5.2.9.4 1.2.5.5.2 1 .2 1.3.1.4-.1 1.2-.5 1.4-1 .2-.5.2-.9.2-1 0-.1-.1-.1-.3-.2zM16 5.3c-5.9 0-10.7 4.8-10.7 10.7 0 2 .6 3.9 1.6 5.5L6 27l5.7-1.5c1.6.9 3.4 1.4 5.3 1.4 5.9 0 10.7-4.8 10.7-10.7S21.9 5.3 16 5.3zm0 19.3c-1.7 0-3.3-.5-4.7-1.3l-.3-.2-3.4.9.9-3.3-.2-.3c-.9-1.4-1.4-3-1.4-4.7 0-4.9 4-8.9 8.9-8.9s8.9 4 8.9 8.9-4 8.9-8.9 8.9z"/></svg>
+  <svg viewBox="0 0 32 32" aria-hidden="true"><path fill="currentColor" d="M19.1 17.4c-.2-.1-1-.5-1.2-.6s-.3-.1-.5.1c-.1.2-.6.6-.7.7-.1.1-.3.1-.5 0-.2-.1-.9-.3-1.7-1.1-.6-.6-1.1-1.3-1.2-1.5-.1-.2 0-.3.1-.4.1-.1.2-.3.3-.4.1-.1.1-.2.2-.3.1-.1.1-.2 0-.4-.1-.2-.5-1.2-.7-1.6-.2-.4-.4-.3-.5-.3h-.4c-.1 0-.4.1-.6.3-.2.2-.8.8-.8 1.9s.8 2.1.9 2.2c.1.1 1.6 2.5 3.9 3.5.5.2.9.4 1.2.5.5.2 1 .2 1.3.1.4-.1 1.2-.5 1.4-1 .2-.5.2-.9.2-1 0-.1-.1-.1-.3-.2zM16 5.3c-5.9 0-10.7 4.8-10.7 10.7 0 2 .6 3.9 1.6 5.5L6 27l5.7-1.5c1.6.9 3.4 1.4 5.3 1.4 5.9 0 10.7-4.8 10.7-10.7S21.9 5.3 16 5.3zm0 19.3c-1.7 0-3.3-.5-4.7-1.3l-.3-.2-3.4 .9.9-3.3-.2-.3c-.9-1.4-1.4-3-1.4-4.7 0-4.9 4-8.9 8.9-8.9s8.9 4 8.9 8.9-4 8.9-8.9 8.9z"/></svg>
 </a>
 
 <button id="backToTop" class="back-to-top" aria-label="Back to top" title="Back to top">
@@ -475,6 +465,62 @@ if(menuServices){
   },{passive:true});
 }
 
-/* Desktop hover
+/* Desktop hover-intent timer for dropdowns */
+let ddWired=false;
+function wireDropdownTimers(){
+  if(innerWidth<=760){ unwireDropdownTimers(); return; }
+  if(ddWired) return;
+  const items=[...document.querySelectorAll('.main-menu > li')];
+  items.forEach(li=>{
+    const dd=li.querySelector('.dropdown'); if(!dd) return;
+    let t;
+    const show=()=>{ clearTimeout(t); dd.classList.add('js-open'); };
+    const hide=()=>{ t=setTimeout(()=>dd.classList.remove('js-open'), 250); };
+    li.__ddShow=show; li.__ddHide=hide;
+    li.addEventListener('mouseenter', show);
+    li.addEventListener('mouseleave', hide);
+    dd.addEventListener('mouseenter', show);
+    dd.addEventListener('mouseleave', hide);
+  });
+  ddWired=true;
+}
+function unwireDropdownTimers(){
+  const items=[...document.querySelectorAll('.main-menu > li')];
+  items.forEach(li=>{
+    const dd=li.querySelector('.dropdown'); if(!dd) return;
+    if(li.__ddShow){ li.removeEventListener('mouseenter', li.__ddShow); dd.removeEventListener('mouseenter', li.__ddShow); }
+    if(li.__ddHide){ li.removeEventListener('mouseleave', li.__ddHide); dd.removeEventListener('mouseleave', li.__ddHide); }
+    dd.classList.remove('js-open'); li.__ddShow=null; li.__ddHide=null;
+  });
+  ddWired=false;
+}
+addEventListener('load', wireDropdownTimers);
+addEventListener('resize', ()=>{ setTimeout(()=>{ unwireDropdownTimers(); wireDropdownTimers(); }, 150); }, {passive:true});
 
+/* Clients marquee — seamless loop */
+(function(){
+  const slider=document.getElementById('aboutClientSlider'); if(!slider) return;
+  const GAP=28; const track=slider.querySelector('.logo-track');
+  const originals=Array.from(track.children).map(n=>n.cloneNode(true));
+  function setWidth(nodes){const rects=nodes.map(n=>n.getBoundingClientRect().width);let w=0;rects.forEach((rw,i)=>{w+=rw;if(i)w+=GAP;});return w;}
+  function build(){
+    track.innerHTML=''; originals.forEach(n=>track.appendChild(n.cloneNode(true)));
+    const one=Array.from(track.children); let setW=setWidth(one);
+    while(track.scrollWidth<slider.clientWidth+setW*1.2){ one.forEach(n=>track.appendChild(n.cloneNode(true))); }
+    one.forEach(n=>track.appendChild(n.cloneNode(true)));
+    const firstSet=Array.from(track.children).slice(0, originals.length);
+    setW=setWidth(firstSet);
+    slider.style.setProperty('--loopW', setW+'px');
+    const dur=Math.max(16, Math.round(setW/55)); track.style.setProperty('--marqueeDur', dur+'s');
+  }
+  build(); let t; addEventListener('resize',()=>{clearTimeout(t); t=setTimeout(build,200);},{passive:true});
+})();
 
+/* Back to top */
+const backBtn=document.getElementById('backToTop');
+function toggleTop(){ backBtn.classList.toggle('show', scrollY>280); }
+addEventListener('scroll', toggleTop, {passive:true}); toggleTop();
+backBtn.addEventListener('click', ()=>window.scrollTo({top:0,behavior:'smooth'}));
+</script>
+</body>
+</html>
