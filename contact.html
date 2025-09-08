@@ -40,15 +40,33 @@ a{text-decoration:none;color:inherit}
 .site-header{
   position:fixed; inset:0 0 auto; z-index:1000; height:72px;
   display:flex; align-items:center; background:var(--hdr-dark); color:#e7f5f4;
-  box-shadow:0 6px 20px rgba(0,0,0,.35); transition:background .2s,height .2s,box-shadow .2s
+  box-shadow:0 6px 20px rgba(0,0,0,.35);
+  transition:background .2s,height .2s,box-shadow .2s,color .2s
 }
-.site-header.scrolled{ background:var(--hdr-light); color:var(--teal); height:64px; box-shadow:0 8px 24px rgba(0,0,0,.15) }
+/* White on scroll + subtle divider */
+.site-header.scrolled{
+  background:var(--hdr-light); color:var(--teal); height:64px;
+  box-shadow:0 8px 24px rgba(0,0,0,.15); border-bottom:1px solid #e6edf1
+}
 .brand img{height:52px}
+/* Logo swap */
+.brand .logo-dark{display:none}
+.site-header.scrolled .brand .logo-light{display:none}
+.site-header.scrolled .brand .logo-dark{display:block}
+
 .main-menu{list-style:none;margin:0;padding:0;display:flex;gap:24px;align-items:center}
 .main-menu>li{position:relative}
 .main-menu a{color:inherit;font-weight:700;display:inline-block;padding:8px 12px;border-radius:10px;line-height:1}
-.site-header:not(.scrolled) .main-menu a:hover{background:var(--teal);color:#fff}
-.site-header.scrolled .main-menu a:hover{background:#fff;color:var(--teal);outline:1px solid color-mix(in srgb,var(--teal) 70%,transparent)}
+/* Ensure teal link color on white header */
+.site-header.scrolled .main-menu a{color:var(--teal)}
+/* Hovers */
+.site-header:not(.scrolled) .main-menu a:hover,
+.site-header:not(.scrolled) .main-menu a:focus-visible{background:var(--teal);color:#fff}
+.site-header.scrolled .main-menu a:hover,
+.site-header.scrolled .main-menu a:focus-visible{
+  background:#fff;color:var(--teal);
+  outline:1px solid color-mix(in srgb,var(--teal) 70%,transparent)
+}
 .caret{margin-left:6px;display:inline-block;transform:translateY(-1px)}
 
 /* dropdown (white) */
@@ -168,7 +186,10 @@ textarea{min-height:120px;resize:vertical}
 <header class="site-header" id="siteHeader">
   <div class="hdr-container">
     <a class="brand" href="index.html" aria-label="Emtithal Home">
-      <img src="images-/logo-01.png" alt="Emtithal Logo">
+      <!-- Light logo (for dark header) -->
+      <img class="logo-light" src="images-/logo-01.png" alt="Emtithal Logo">
+      <!-- Dark logo (for white sticky header) — update this path to your dark variant -->
+      <img class="logo-dark" src="images-/logo-01-dark.png" alt="Emtithal Logo Dark">
     </a>
 
     <nav aria-label="Primary">
@@ -384,7 +405,7 @@ textarea{min-height:120px;resize:vertical}
 <!-- WhatsApp FAB -->
 <div class="fab-wrap">
   <a class="whatsapp" href="https://wa.me/966559906886?text=Hello%20Emtithal" target="_blank" aria-label="WhatsApp">
-    <svg viewBox="0 0 32 32"><path fill="currentColor" d="M19.11 17.35c-.26-.13-1.52-.75-1.76-.84-.24-.09-.41-.13-.58.13-.17.26-.66.84-.81 1.02-.15.17-.3.2-.56.07-.26-.13-1.09-.4-2.09-1.27-.77-.68-1.29-1.52-1.44-1.77-.15-.26-.02-.4.11-.53.11-.11.26-.3.39-.45.13-.15.17-.26.26-.43.09-.17.04-.32-.02-.45-.06-.13-.58-1.4-.8-1.92-.21-.5-.42-.43-.58-.44h-.5c-.17 0-.45.06-.69.32-.24.26-.9.88-.9 2.15s.92 2.5 1.05 2.67c.13.17 1.81 2.77 4.38 3.88.61.26 1.09.41 1.47.53.62.2 1.19.17 1.64.1.5-.07 1.52-.62 1.74-1.22.22-.6.22-1.1.15-1.21-.06-.11-.24-.17-.5-.3zM16 3.2a12.8 12.8 0 0 0-10.9 19.4L3 29l6.55-1.99A12.79 12.79 0 1 0 16 3.2Zm0 23.16c-2.01 0-3.88-.54-5.49-1.48l-.39-.23-3.27.99.99-3.19-.25-.41a10.6 10.6 0 1 1 8.41 4.32z"/></svg>
+    <svg viewBox="0 0 32 32"><path fill="currentColor" d="M19.11 17.35c-.26-.13-1.52-.75-1.76-.84-.24-.09-.41-.13-.58.13-.17.26-.66.84-.81 1.02-.15.17-.3.2-.56.07-.26-.13-1.09-.4-2.09-1.27-.77-.68-1.29-1.52-1.44-1.77-.15-.26-.02-.4.11-.53.11-.11.26-.3.39-.45.13-.15.17-.26.26-.43.09-.17.04-.32-.02-.45-.06-.13-.58-1.4-.8-1.92-.21-.5-.42-.43-.58-.44h-.5c-.17 0-.45.06-.69 .32-.24 .26-.9 .88-.9 2.15s.92 2.5 1.05 2.67c.13 .17 1.81 2.77 4.38 3.88.61 .26 1.09 .41 1.47 .53.62 .2 1.19 .17 1.64 .1.5 -.07 1.52 -.62 1.74 -1.22.22 -.6 .22 -1.1 .15 -1.21-.06 -.11-.24 -.17-.5 -.3zM16 3.2a12.8 12.8 0 0 0-10.9 19.4L3 29l6.55-1.99A12.79 12.79 0 1 0 16 3.2Zm0 23.16c-2.01 0-3.88-.54-5.49-1.48l-.39-.23-3.27 .99.99 -3.19-.25 -.41a10.6 10.6 0 1 1 8.41 4.32z"/></svg>
   </a>
 </div>
 
