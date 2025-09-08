@@ -58,7 +58,7 @@ a{text-decoration:none}
   color:inherit;font-weight:600;position:relative;display:inline-block;
   padding:8px 12px;border-radius:10px;line-height:1
 }
-
+/*
 /* ----- Hover styles: different for normal vs sticky ----- */
 /* Normal header (dark): hover = TEAL background with WHITE text */
 .site-header:not(.scrolled) .main-menu a:hover,
@@ -72,7 +72,28 @@ a{text-decoration:none}
   background:#ffffff; color:var(--teal);
   outline:1px solid color-mix(in srgb, var(--teal) 70%, transparent);
   box-shadow:0 1px 0 rgba(0,0,0,.03)
-}
+}  
+*/
+
+  /* Header */
+.hdr-container{width:min(1160px,92%);margin-inline:auto;display:flex;align-items:center;justify-content:space-between;gap:18px}
+.site-header{position:fixed;inset:0 0 auto;z-index:1000;height:72px;display:flex;align-items:center;background:var(--hdr-dark);color:#e7f5f4;box-shadow:0 6px 20px rgba(0,0,0,.35);transition:background .2s,height .2s,box-shadow .2s,color .2s}
+.site-header.scrolled{background:var(--hdr-light);color:var(--teal);height:64px;box-shadow:0 8px 24px rgba(0,0,0,.15)}
+.brand img{height:52px}
+
+/* two-logo swap */
+.brand .logo-scroll{display:none}
+.site-header.scrolled .brand .logo-main{display:none}
+.site-header.scrolled .brand .logo-scroll{display:block}
+
+.main-menu{list-style:none;margin:0;padding:0;display:flex;gap:24px;align-items:center}
+.main-menu>li{position:relative}
+.main-menu a{color:inherit;text-decoration:none;font-weight:600;padding-bottom:6px;position:relative}
+.main-menu a::after{content:"";position:absolute;left:0;bottom:0;height:2px;width:0;background:var(--blue);transition:width .25s}
+.site-header:not(.scrolled) .main-menu a{color:#e7f5f4}
+.site-header.scrolled .main-menu a{color:var(--teal)}
+.main-menu a:hover::after{width:100%}
+.caret{margin-left:6px;display:inline-block;transform:translateY(-1px)}
 
 .caret{margin-left:6px;display:inline-block;transform:translateY(-1px)}
 
@@ -204,7 +225,10 @@ a{text-decoration:none}
 <header class="site-header" id="siteHeader">
   <div class="hdr-container">
     <a class="brand" href="index.html" aria-label="Emtithal Home">
-      <img src="images-/logo-01.png" alt="Emtithal Logo">
+      <!-- MAIN MENU LOGO (teal for dark header) -->
+      <img class="logo-main" src="logo-04.webp" alt="Emtithal Logo — Teal on dark">
+      <!-- SCROLL MENU LOGO (dark/colored for light header) -->
+      <img class="logo-scroll" src="logo-01.webp" alt="Emtithal Logo — Dark on light">
     </a>
 
     <nav aria-label="Primary">
@@ -459,3 +483,4 @@ if(menuServices){
 }
 
 /* Desktop hover
+
