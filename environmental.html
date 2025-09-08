@@ -13,6 +13,7 @@
   --hdr-dark:#103a38; --hdr-light:#ffffff;
   --dd-hide-delay:.28s; /* dropdown hide delay */
 }
+
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{margin:0;background:var(--bg);color:var(--ink-on-dark);font-family:"Poppins","Cairo",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;line-height:1.6;padding-top:var(--header-h)}
@@ -29,9 +30,15 @@ a{text-decoration:none}
 
 /* Header */
 .hdr-container{width:min(1160px,92%);margin-inline:auto;display:flex;align-items:center;justify-content:space-between;gap:18px}
-.site-header{position:fixed;inset:0 0 auto;z-index:1000;height:72px;display:flex;align-items:center;background:var(--hdr-dark);color:#e7f5f4;box-shadow:0 6px 20px rgba(0,0,0,.35);transition:background .2s,height .2s,box-shadow .2s}
+.site-header{position:fixed;inset:0 0 auto;z-index:1000;height:72px;display:flex;align-items:center;background:var(--hdr-dark);color:#e7f5f4;box-shadow:0 6px 20px rgba(0,0,0,.35);transition:background .2s,height .2s,box-shadow .2s,color .2s}
 .site-header.scrolled{background:var(--hdr-light);color:var(--teal);height:64px;box-shadow:0 8px 24px rgba(0,0,0,.15)}
 .brand img{height:52px}
+
+/* two-logo swap */
+.brand .logo-scroll{display:none}
+.site-header.scrolled .brand .logo-main{display:none}
+.site-header.scrolled .brand .logo-scroll{display:block}
+
 .main-menu{list-style:none;margin:0;padding:0;display:flex;gap:24px;align-items:center}
 .main-menu>li{position:relative}
 .main-menu a{color:inherit;text-decoration:none;font-weight:600;padding-bottom:6px;position:relative}
@@ -40,17 +47,24 @@ a{text-decoration:none}
 .site-header.scrolled .main-menu a{color:var(--teal)}
 .main-menu a:hover::after{width:100%}
 .caret{margin-left:6px;display:inline-block;transform:translateY(-1px)}
+
 .dropdown{
-  position:absolute;top:calc(100% + 10px);left:0;min-width:260px;background:#fff;border:1px solid #000000;border-radius:12px;padding:8px;
+  position:absolute;top:calc(100% + 10px);left:0;min-width:260px;background:#fff;border:1px solid #e6ecec;border-radius:12px;padding:8px;
   opacity:0;visibility:hidden;transform:translateY(8px);pointer-events:none;will-change:opacity,transform;
   transition:opacity .18s ease var(--dd-hide-delay),transform .18s ease var(--dd-hide-delay),visibility 0s linear var(--dd-hide-delay);
   box-shadow:0 16px 36px rgba(10,20,30,.15)
 }
-.dropdown a{display:block;padding:10px 12px;border-radius:8px;color:var(--teal)}
-.dropdown a:hover{background:#f4f7f9;color:#113332}
-.main-menu li:hover>.dropdown,.main-menu .open-dd>.dropdown,.dropdown.js-open{opacity:1;visibility:visible;transform:translateY(0);pointer-events:auto;transition-delay:0s,0s,0s}
+/* force teal links in dropdown in all states */
+.dropdown a{display:block;padding:10px 12px;border-radius:8px;color:var(--teal) !important;font-weight:600}
+.dropdown a:hover{background:#f4f7f9;color:#113332 !important}
+
+.main-menu li:hover>.dropdown,
+.main-menu .open-dd>.dropdown,
+.dropdown.js-open{opacity:1;visibility:visible;transform:translateY(0);pointer-events:auto;transition-delay:0s,0s,0s}
+
 .nav-toggle{display:none;background:#0b2b29;color:#fff;border:0;padding:10px 14px;border-radius:10px;font-weight:700}
 .site-header.scrolled .nav-toggle{background:#eef4f4;color:var(--teal)}
+
 @media (max-width:760px){
   .nav-toggle{display:inline-block}
   .main-menu{display:none;position:absolute;top:72px;left:4%;right:4%;background:var(--hdr-dark);padding:14px;border-radius:12px;flex-direction:column;gap:12px}
@@ -70,11 +84,13 @@ a{text-decoration:none}
 .grid{display:grid;gap:var(--gap)}
 .grid-2{grid-template-columns:1.05fr .95fr;align-items:center}
 @media (max-width:980px){.grid-2{grid-template-columns:1fr}}
+
 .card{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;box-shadow:var(--shadow)}
 .card-body{padding:18px}
 .card img{width:100%;height:100%;object-fit:cover}
 .card h3{margin:.2rem 0 8px;color:#fff}
 .card p{margin:0;color:#a7b4b2}
+
 ul.clean{margin:10px 0 0 18px;color:#c9d4d3}
 ul.clean li{margin:6px 0}
 
@@ -89,7 +105,8 @@ ul.clean li{margin:6px 0}
 
 /* Footer */
 .footer-modern.v2{background:#0b0c11;color:#cfd3da;border-top:1px solid #10131a}
-.footer-modern.v2 a{color:#cfd3da}.footer-modern.v2 a:hover{color:#fff}
+.footer-modern.v2 a{color:#cfd3da}
+.footer-modern.v2 a:hover{color:#fff}
 .footer-cta{margin:48px auto 26px;padding:18px 22px;display:flex;align-items:center;justify-content:space-between;gap:16px;background:#12161d;border:1px solid #1e2531;border-radius:18px;box-shadow:0 18px 40px rgba(0,0,0,.35)}
 .footer-columns{display:grid;gap:36px 48px;grid-template-columns:repeat(4,1fr);padding:24px 0 16px}
 .foot-title{color:#fff;margin:0 0 14px;font-weight:800;text-transform:uppercase;letter-spacing:.3px;display:flex;align-items:center;gap:10px}
@@ -135,30 +152,42 @@ ul.clean li{margin:6px 0}
 <!-- Header -->
 <header class="site-header" id="siteHeader">
   <div class="hdr-container">
-    <a class="brand" href="index.html" aria-label="Emtithal Home"><img src="logo-04.webp" alt="Emtithal Logo"></a>
+    <a class="brand" href="index.html" aria-label="Emtithal Home">
+      <!-- MAIN MENU LOGO (teal for dark header) -->
+      <img class="logo-main" src="logo-teal.webp" alt="Emtithal Logo — Teal on dark">
+      <!-- SCROLL MENU LOGO (dark/colored for light header) -->
+      <img class="logo-scroll" src="logo-dark.webp" alt="Emtithal Logo — Dark on light">
+    </a>
+
     <nav aria-label="Primary">
       <ul class="main-menu" id="mainMenu">
-        <li><a href="index.html">Home</a></li><li><a href="about.html">About</a></li>
-        <li id="menuServices"><a href="services.html">Services <span class="caret">▾</span></a>
-          <div class="dropdown" id="servicesDropdown">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+
+        <li id="menuServices">
+          <a href="services.html">Services <span class="caret">▾</span></a>
+          <div class="dropdown" id="servicesDropdown" role="menu" aria-label="Services">
             <a href="environmental.html">Environmental Consultancy</a>
             <a href="mobile-lab.html">Mobile Lab</a>
             <a href="pest-control.html">Pest Control</a>
           </div>
         </li>
-        <li><a href="blog.html">Blog</a></li><li><a href="contact.html">Contact</a></li>
+
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="contact.html">Contact</a></li>
       </ul>
     </nav>
+
     <a class="btn btn-primary" href="contact.html#contactForm">Get a Quote</a>
     <button id="navToggle" class="nav-toggle" aria-expanded="false" aria-controls="mainMenu">☰</button>
   </div>
 </header>
 
 <!-- Hero -->
-<section class="hero">
+<section class="hero" aria-label="Environmental Consultancy">
   <div class="hero-inner">
     <h1>Environmental Consultancy</h1>
-    <p class="lead">Gap assessments, HSE programs, waste & hazardous controls, and audit-ready documentation—built for Saudi regulations.</p>
+    <p class="lead">Gap assessments, HSE programs, waste &amp; hazardous controls, and audit-ready documentation—built for Saudi regulations.</p>
   </div>
 </section>
 
@@ -170,7 +199,7 @@ ul.clean li{margin:6px 0}
       <h2 class="title">What We Deliver</h2>
       <ul class="clean">
         <li>Regulatory <strong>gap analysis</strong>, risk registers, and permits support.</li>
-        <li>Waste & hazardous material procedures, storage maps, and manifests.</li>
+        <li>Waste &amp; hazardous material procedures, storage maps, and manifests.</li>
         <li>Monitoring plans, <strong>training decks</strong>, drills, and KPIs dashboards.</li>
         <li>Internal audits, pre-inspection readiness, and CAPA follow-through.</li>
       </ul>
@@ -222,33 +251,66 @@ ul.clean li{margin:6px 0}
     <p>Need an audit or program fast? We’re ready.</p>
     <a class="btn btn-primary" href="contact.html#contactForm">Request a Free Inspection</a>
   </div>
+
   <div class="container footer-columns">
-    <div><h5 class="foot-title"><span class="foot-ico"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M6 3h7l5 5v13a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Zm7 1.5V9h4.5L13 4.5ZM8 11h8v1.8H8V11Zm0 3.8h8v1.8H8V14.8Zm0 3.8h5.5v1.8H8V18.6Z"/></svg></span>CONTENT</h5>
-      <ul class="foot-links"><li><a href="services.html">Popular Services</a></li><li><a href="blog.html">Guides &amp; News</a></li><li><a href="services.html#before-after">Before &amp; After</a></li></ul></div>
-    <div><h5 class="foot-title"><span class="foot-ico"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a10 10 0 1 1 0 20 10 10 0 0 1 0-20Zm0 6a1.25 1.25 0 1 0 0 2.5A1.25 1.25 0 0 0 12 8Zm1.6 9h-3.2v-1.8h1.2V12h-1.2v-1.8h2a1 1 0 0 1 1 1v3.8h1.2V17Z"/></svg></span>INFORMATION</h5>
-      <ul class="foot-links"><li><a href="about.html">About Us</a></li><li><a href="services.html">Our Services</a></li><li><a href="contact.html#contactForm">Request Service</a></li></ul></div>
-    <div><h5 class="foot-title"><span class="foot-ico"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2 4 6v6c0 5 3.4 8.6 8 10 4.6-1.4 8-5 8-10V6l-8-4Zm-1.2 13.4-3.2-3.2 1.4-1.4 1.8 1.8 3.9-3.9 1.4 1.4-5.3 5.3Z"/></svg></span>SUPPORT &amp; LEGAL</h5>
-      <ul class="foot-links"><li><a href="terms.html">Terms &amp; Conditions</a></li><li><a href="privacy.html">Privacy Policy</a></li><li><a href="cookies.html">Cookies Policy</a></li></ul></div>
-    <div><h5 class="foot-title"><span class="foot-ico"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M20 3H4a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h3l5 3 5-3h3a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2Zm-3 7H7V8h10v2Zm0 4H7v-2h10v2Z"/></svg></span>CONNECT WITH US</h5>
-      <div class="social-row"><a class="social" href="#"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M22 12.07C22 6.57 17.52 2.1 12 2.1S2 6.57 2 12.07c0 4.98 3.66 9.11 8.44 9.93v-7.02H7.9v-2.9h2.54V9.75c0-2.5 1.49-3.89 3.77-3.89 1.09 0 2.23.2 2.23.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56v1.86h2.78l-.44 2.9h-2.34V22c4.78-.82 8.44-4.95 8.44-9.93Z"/></svg></a>
+    <div>
+      <h5 class="foot-title"><span class="foot-ico"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M6 3h7l5 5v13a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Zm7 1.5V9h4.5L13 4.5ZM8 11h8v1.8H8V11Zm0 3.8h8v1.8H8V14.8Zm0 3.8h5.5v1.8H8V18.6Z"/></svg></span>CONTENT</h5>
+      <ul class="foot-links">
+        <li><a href="services.html">Popular Services</a></li>
+        <li><a href="blog.html">Guides &amp; News</a></li>
+        <li><a href="services.html#before-after">Before &amp; After</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <h5 class="foot-title"><span class="foot-ico"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a10 10 0 1 1 0 20 10 10 0 0 1 0-20Zm0 6a1.25 1.25 0 1 0 0 2.5A1.25 1.25 0 0 0 12 8Zm1.6 9h-3.2v-1.8h1.2V12h-1.2v-1.8h2a1 1 0 0 1 1 1v3.8h1.2V17Z"/></svg></span>INFORMATION</h5>
+      <ul class="foot-links">
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="services.html">Our Services</a></li>
+        <li><a href="contact.html#contactForm">Request Service</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <h5 class="foot-title"><span class="foot-ico"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2 4 6v6c0 5 3.4 8.6 8 10 4.6-1.4 8-5 8-10V6l-8-4Zm-1.2 13.4-3.2-3.2 1.4-1.4 1.8 1.8 3.9-3.9 1.4 1.4-5.3 5.3Z"/></svg></span>SUPPORT &amp; LEGAL</h5>
+      <ul class="foot-links">
+        <li><a href="terms.html">Terms &amp; Conditions</a></li>
+        <li><a href="privacy.html">Privacy Policy</a></li>
+        <li><a href="cookies.html">Cookies Policy</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <h5 class="foot-title"><span class="foot-ico"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M20 3H4a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h3l5 3 5-3h3a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2Zm-3 7H7V8h10v2Zm0 4H7v-2h10v2Z"/></svg></span>CONNECT WITH US</h5>
+      <div class="social-row">
+        <a class="social" href="#"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M22 12.07C22 6.57 17.52 2.1 12 2.1S2 6.57 2 12.07c0 4.98 3.66 9.11 8.44 9.93v-7.02H7.9v-2.9h2.54V9.75c0-2.5 1.49-3.89 3.77-3.89 1.09 0 2.23.2 2.23.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56v1.86h2.78l-.44 2.9h-2.34V22c4.78-.82 8.44-4.95 8.44-9.93Z"/></svg></a>
         <a class="social" href="#"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2.2c3.2 0 3.58.01 4.85.07 1.17.05 1.96.24 2.67.51.73.28 1.35.66 1.96 1.27.6.6.99 1.22 1.26 1.95.27.71.46 1.5.52 2.67.05 1.27.06 1.65.06 4.85s-.01 3.58-.06 4.85c-.06 1.17-.25 1.95-.52 2.67-.27.73-.66 1.35-1.26 1.95-.61.61-1.23.99-1.96 1.27-.71.27-1.5.46-2.67.51-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.96-.24-2.67-.51a5.3 5.3 0 0 1-1.96-1.27 5.3 5.3 0 0 1-1.27-1.95c-.27-.72-.46-1.5-.51-2.67C2.21 15.58 2.2 15.2 2.2 12s.01-3.58.07-4.85c.05-1.17.24-1.96.51-2.67.28-.73.66-1.35 1.27-1.96.6-.6 1.22-.99 1.95-1.26.71-.27 1.5-.46 2.67-.51C8.42 2.21 8.8 2.2 12 2.2Zm0 3.5a6.5 6.5 0 1 1 0 13 6.5 6.5 0 0 1 0-13Zm5.2-2.76a1.24 1.24 0 1 1 0 2.48 1.24 1.24 0 0 1 0-2.48Z"/></svg></a>
         <a class="social" href="#"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M20.45 20.45h-3.55v-5.68c0-1.36-.02-3.11-1.9-3.11-1.9 0-2.19 1.48-2.19 3v5.79H9.26V9.5h3.41v1.49h.05c.48-.91 1.65-1.87 3.39-1.87 3.62 0 4.29 2.38 4.29 5.47v5.86ZM5.34 8.01a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12Zm-1.78 12.44h3.56V9.5H3.56v10.95Z"/></svg></a>
       </div>
     </div>
   </div>
-  <div class="container footer-sub"><div>Emtithal Environmental Consulting Projects.</div><div>Pest Control • Environmental • Food Safety • HSE • IPM</div></div>
-  <div class="foot-bottom"><div class="container bottom-inner">
-    <img class="bottom-logo" src="logo-04.webp" alt="Emtithal Logo">
-    <div>&copy; 2025 Emtithal Consulting. All rights reserved. · Developed by <a href="mailto:ismailderia123@gmail.com">Ismail Deria</a></div>
-    <a class="btn ghost" href="contact.html#contactForm">Get Started</a>
-  </div></div>
+
+  <div class="container footer-sub">
+    <div>Emtithal Environmental Consulting Projects.</div>
+    <div>Pest Control • Environmental • Food Safety • HSE • IPM</div>
+  </div>
+
+  <div class="foot-bottom">
+    <div class="container bottom-inner">
+      <img class="bottom-logo" src="logo-04.webp" alt="Emtithal Logo">
+      <div>&copy; 2025 Emtithal Consulting. All rights reserved. · Developed by <a href="mailto:ismailderia123@gmail.com">Ismail Deria</a></div>
+      <a class="btn ghost" href="contact.html#contactForm">Get Started</a>
+    </div>
+  </div>
 </footer>
 
 <!-- FABs -->
 <a class="whatsapp-btn" href="https://wa.me/966559906886" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
   <svg viewBox="0 0 32 32" aria-hidden="true"><path fill="currentColor" d="M19.1 17.4c-.2-.1-1-.5-1.2-.6s-.3-.1-.5.1c-.1.2-.6.6-.7.7-.1.1-.3.1-.5 0-.2-.1-.9-.3-1.7-1.1-.6-.6-1.1-1.3-1.2-1.5-.1-.2 0-.3.1-.4.1-.1.2-.3.3-.4.1-.1.1-.2.2-.3.1-.1.1-.2 0-.4-.1-.2-.5-1.2-.7-1.6-.2-.4-.4-.3-.5-.3h-.4c-.1 0-.4.1-.6.3-.2.2-.8.8-.8 1.9s.8 2.1.9 2.2c.1.1 1.6 2.5 3.9 3.5.5.2.9.4 1.2.5.5.2 1 .2 1.3.1.4-.1 1.2-.5 1.4-1 .2-.5.2-.9.2-1 0-.1-.1-.1-.3-.2zM16 5.3c-5.9 0-10.7 4.8-10.7 10.7 0 2 .6 3.9 1.6 5.5L6 27l5.7-1.5c1.6.9 3.4 1.4 5.3 1.4 5.9 0 10.7-4.8 10.7-10.7S21.9 5.3 16 5.3zm0 19.3c-1.7 0-3.3-.5-4.7-1.3l-.3-.2-3.4.9.9-3.3-.2-.3c-.9-1.4-1.4-3-1.4-4.7 0-4.9 4-8.9 8.9-8.9s8.9 4 8.9 8.9-4 8.9-8.9 8.9z"/></svg>
 </a>
-<button id="backToTop" class="back-to-top" aria-label="Back to top" title="Back to top"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
+<button id="backToTop" class="back-to-top" aria-label="Back to top" title="Back to top">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+</button>
 
 <script>
 /* header scroll */
@@ -314,6 +376,3 @@ backBtn.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}))
 </script>
 </body>
 </html>
-
-
-
